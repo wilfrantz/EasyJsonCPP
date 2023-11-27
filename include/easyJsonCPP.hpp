@@ -36,10 +36,19 @@ namespace easyjson
     class EasyJsonCPP
     {
     public:
-        EasyJsonCPP() {}
+
+        explicit EasyJsonCPP(const std::string &confifFile = "easyJson_config.json") : _configFile(confifFile)
+        {
+            _logger = spdlog::get("EasyJson");
+            if (!_logger)
+            {
+                _logger = spdlog::stdout_color_mt("EasyJson");
+            }
+        }
+
         void loadConfig();
 
-        void setLogLevel(const std::string &level);
+        // void setLogLevel(const std::string &level);
 
         // Methods to parse the configuration file.
         void parseConfig(const Json::Value &root);
@@ -108,12 +117,10 @@ namespace easyjson
 
     /**
      * @brief Validates the root element of the loaded JSON configuration.
-     *
      * This method checks whether the root element of the JSON configuration is an array.
      * It is a critical validation step to ensure that the configuration file adheres to
      * the expected format. If the root element is not an array, a runtime error is thrown,
      * indicating an invalid configuration format.
-     *
      * @param root A reference to the Json::Value object representing the root element of the JSON configuration.
      * @throws std::runtime_error If the root element of the JSON configuration is not an array.
      */

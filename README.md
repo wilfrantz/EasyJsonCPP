@@ -28,7 +28,7 @@ To use `easyJsonCPP` in your project, include the `easyJsonCPP.h` header file in
 Here's a quick example to get you started:
 
 ```cpp
-#include "easyJsonCPP.h"
+#include "include/easyJsonCPP.h"
 
 int main() {
     easyjson::EasyJsonCPP configLoader("config.json");
