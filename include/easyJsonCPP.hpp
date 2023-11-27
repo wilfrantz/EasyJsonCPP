@@ -39,12 +39,18 @@ namespace easyjson
         EasyJsonCPP() {}
         void loadConfig();
 
+        void setLogLevel(const std::string &level);
+
         // Methods to parse the configuration file.
         void parseConfig(const Json::Value &root);
         void validateConfigRoot(const Json::Value &root);
         void parseArrayConfig(const Json::Value &arrayValue);
         void parseObjectConfig(const Json::Value &objectValue);
+        bool isTargetKey(const std::string &key) const;
         void processConfigValue(const std::string &key, const Json::Value &value);
+        void processTargetKeys(const Json::Value &configValue, const std::string &key);
+
+        const std::vector<std::string> _targetKeys = {"Examples", "Examples1", "Examples2", "Examples3"};
 
     private:
         std::string _configFile;
@@ -63,30 +69,40 @@ namespace easyjson
     {
         if (_configFile.empty())
         {
-            _logger->error("Configuration file is empty.");
-            throw std::runtime_error("Configuration file is empty.");
+            const std::string error_msg = "Configuration file path is empty.";
+            _logger->error(error_msg);
+            throw std::runtime_error(error_msg);
         }
+
+        std::ifstream file(_configFile);
+        if (!file)
+        {
+            std::string error_msg = "Could not open config file: " + _configFile;
+            _logger->error(error_msg);
+            throw std::runtime_error(error_msg);
+        }
+
+        _logger->debug("Loading configuration file: {}", _configFile);
 
         try
         {
-            _logger->debug("Loading configuration file: {}.", _configFile);
-
-            std::ifstream file(_configFile);
-
-            if (!file.is_open())
-            {
-                throw std::runtime_error("Could not open config file: " + _configFile);
-            }
-
             Json::Value root;
             file >> root;
+            if (file.fail())
+            {
+                std::string error_msg = "Failed to parse JSON from file: " + _configFile;
+                _logger->error(error_msg);
+                throw std::runtime_error(error_msg);
+            }
+
             validateConfigRoot(root);
             parseConfig(root);
         }
         catch (const std::exception &e)
         {
-            _logger->error("Error reading configuration file: {}", e.what());
-            throw;
+            std::string error_msg = "Error processing configuration file: " + std::string(e.what());
+            _logger->error(error_msg);
+            throw std::runtime_error(error_msg);
         }
     }
 
@@ -157,6 +173,21 @@ namespace easyjson
     }
 
     /**
+     * @brief Checks if the provided key is a target key.
+     *
+     * This method determines if a given key is part of the predefined set of target keys. It searches
+     * through the '_targetKeys' container to see if the specified key exists. This is useful for identifying
+     * keys that require special processing or handling within the JSON configuration.
+     *
+     * @param key A string representing the key to be checked against the set of target keys.
+     * @return bool Returns true if the key is a target key, false otherwise.
+     */
+    bool EasyJsonCPP::isTargetKey(const std::string &key) const
+    {
+        return std::find(_targetKeys.begin(), _targetKeys.end(), key) != _targetKeys.end();
+    }
+
+    /**
      * @brief Parses each object within a JSON array from the configuration file.
      *
      * This method iterates through an array of JSON objects, ensuring each element in the array is indeed an object.
@@ -198,6 +229,7 @@ namespace easyjson
             processConfigValue(key, value);
         }
     }
+
 }
 
 #endif // EASYJSONCPP_H

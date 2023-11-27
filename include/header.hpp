@@ -1,6 +1,6 @@
 /**
  * @file HEADER.hpp
- * 
+ *
  * This header file contains the necessary includes and definitions for cross-platform
  * compatibility and functionality in a C++ project. It includes a variety of standard
  * and third-party libraries to support a range of functionalities such as file system
@@ -41,7 +41,6 @@
 #include <filesystem>
 #include <curl/curl.h>
 #include <bits/stdc++.h>
-
 #include <spdlog/spdlog.h>
 #include <jsoncpp/json/json.h>
 #include <jsoncpp/json/reader.h>
