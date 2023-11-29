@@ -58,7 +58,7 @@ namespace easyjson
         void parseArrayConfig(const Json::Value &arrayValue);
         void parseObjectConfig(const Json::Value &objectValue);
         void processConfigValue(const std::string &key, const Json::Value &value);
-        void processTargetKeys(const Json::Value &configValue, const std::string &key);
+        // void processTargetKeys(const Json::Value &configValue, const std::string &key);
 
     private:
         std::string _configFile;

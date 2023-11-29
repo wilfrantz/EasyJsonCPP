@@ -175,19 +175,17 @@ namespace easyjson
         }
     }
 
-
     /**
      * @brief Process and store a configuration value in the EasyJsonCPP configuration map.
      *
      * This function is responsible for processing a key-value pair from a JSON configuration file.
      * It checks the type of the JSON value (string or integer) and stores it in the configuration map.
-     *
      * @param key The configuration key (string).
      * @param value The JSON value associated with the key.
-     *
      * @throws std::runtime_error if the JSON value is not a string or an integer.
      */
-    void EasyJsonCPP::processConfigValue(const std::string &key, const Json::Value &value)
+    void EasyJsonCPP::processConfigValue(const std::string &key,
+                                         const Json::Value &value)
     {
         if (value.isString())
         {

@@ -51,8 +51,9 @@
 
 ## Installation and Setup
 
-- Instructions for setting up dependencies like JSONCPP and spdlog.
-- Steps to include and use `easyJsonCPP` in C++ projects.
+- Instructions for setting up dependencies like `JSONCPP` and `spdlog`.
+- ~~Steps to include and use `easyJsonCPP` in C++ projects~~.
+- Steps to compile and use `easyJsonCPP` in `C++` projects.
 
 ## Usage
 
