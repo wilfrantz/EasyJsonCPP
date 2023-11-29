@@ -18,11 +18,16 @@
  * @author: (C) 2023 Wilfrantz Dede
  */
 
+#include "include/tester.hpp"
 #include "include/easyJsonCPP.hpp"
+
+using namespace tester;
+using namespace easyjson;
 
 int main()
 {
-    easyjson::EasyJsonCPP configLoader("config.json");
+    Tester test;
+    EasyJsonCPP configLoader("config.json", test._targetKeys);
     configLoader.loadConfig();
 
     return EXIT_SUCCESS;
