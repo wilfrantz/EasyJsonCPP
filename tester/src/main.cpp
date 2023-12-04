@@ -19,7 +19,6 @@
  */
 
 #include "include/tester.hpp"
-#include "include/easyJsonCPP.hpp"
 
 using namespace tester;
 using namespace easyjson;

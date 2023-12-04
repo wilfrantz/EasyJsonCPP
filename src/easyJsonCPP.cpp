@@ -2,7 +2,16 @@
 
 namespace easyjson
 {
-
+    explicit EasyJsonCPP::EasyJsonCPP(const std::string &confifFile = "easyJson_config.json",
+                                      const std::vector<std::string> targets)
+        : _configFile(confifFile), _targetKeys(targets)
+    {
+        _logger = spdlog::get("EasyJson");
+        if (!_logger)
+        {
+            _logger = spdlog::stdout_color_mt("EasyJson");
+        }
+    }
     /**
      * @brief Loads the JSON configuration file into the application.
      * This method checks if the configuration file path is set and non-empty. It then attempts to open the file,
@@ -11,7 +20,6 @@ namespace easyjson
      * throws a runtime exception. It also validates and processes the JSON content through 'validateConfigRoot'
      * and 'parseConfig' methods.
      */
-    // void EasyJsonCPP::loadConfig();
     void EasyJsonCPP::loadConfig(std::vector<std::string> targetKeys = {})
     {
         if (_configFile.empty())
@@ -189,11 +197,11 @@ namespace easyjson
     {
         if (value.isString())
         {
-            _configMap.emplace(key, value.asString());
+            this->_configMap.emplace(key, value.asString());
         }
         else if (value.isInt())
         {
-            _configMap.emplace(key, std::to_string(value.asInt()));
+            this->_configMap.emplace(key, std::to_string(value.asInt()));
         }
         else
         {

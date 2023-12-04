@@ -13,18 +13,21 @@
 #ifndef TESTER_HPP
 #define TESTER_HPP
 
-#include "include/header.hpp"
+#include "include/easyJsonCPP.hpp"
 
+using namespace easyjson;
 namespace tester
 {
 
-    class Tester
+    class Tester final : public EasyJsonCPP
     {
     public:
-        Tester() {}
-        static std::map<std::string, std::string> _configMap;
+        Tester() : _configMap(EasyJsonCPP::_configMap) {}
+        std::map<std::string, std::string> _configMap;
         std::shared_ptr<spdlog::logger> _logger = spdlog::stdout_color_mt("Tester");
         const std::vector<std::string> _targetKeys = {"twitter", "tiktok", "instagram", "facebook"};
+
+        void processTargetKeys(const Json::Value &configValue, const std::string &key) override;
 
     private:
     };

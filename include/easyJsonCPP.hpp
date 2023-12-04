@@ -37,33 +37,28 @@ namespace easyjson
     {
     public:
         explicit EasyJsonCPP(const std::string &confifFile = "easyJson_config.json",
-                             const std::vector<std::string> target)
-            : _configFile(confifFile), _targetKeys(target)
-        {
-            _logger = spdlog::get("EasyJson");
-            if (!_logger)
-            {
-                _logger = spdlog::stdout_color_mt("EasyJson");
-            }
-        }
+                             const std::vector<std::string> targets);
 
+        // TODO: Use a multidimensional map instead.
+        // std::map<std::string, std::map<std::string, std::string>> _configMapGrid;
+        std::map<std::string, std::string> _configMap;
         void loadConfig(std::vector<std::string> targetKeys = {});
 
         // void setLogLevel(const std::string &level);
 
-        // Methods to parse the configuration file.
+        // Methods to parse the config Json file.
         void parseConfig(const Json::Value &root);
         bool isTargetKey(const std::string &key) const;
         void validateConfigRoot(const Json::Value &root);
         void parseArrayConfig(const Json::Value &arrayValue);
         void parseObjectConfig(const Json::Value &objectValue);
         void processConfigValue(const std::string &key, const Json::Value &value);
-        // void processTargetKeys(const Json::Value &configValue, const std::string &key);
+        virtual void processTargetKeys(const Json::Value &configValue, const std::string &key);
 
     private:
         std::string _configFile;
-        static std::shared_ptr<spdlog::logger> _logger;
         const std::vector<std::string> _targetKeys;
+        static std::shared_ptr<spdlog::logger> _logger;
     };
 
 }
