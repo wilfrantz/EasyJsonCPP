@@ -28,6 +28,7 @@ int main()
     Tester test;
     EasyJsonCPP configLoader("config.json", test._targetKeys);
     configLoader.loadConfig();
+    test.printNestedMap();
 
     return EXIT_SUCCESS;
 }

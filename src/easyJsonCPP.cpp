@@ -2,9 +2,9 @@
 
 namespace easyjson
 {
-    explicit EasyJsonCPP::EasyJsonCPP(const std::string &confifFile = "easyJson_config.json",
+    explicit EasyJsonCPP::EasyJsonCPP(const std::string &configFile = "easyJson_config.json",
                                       const std::vector<std::string> targets)
-        : _configFile(confifFile), _targetKeys(targets)
+        : _configFile(configFile), _targetKeys(targets)
     {
         _logger = spdlog::get("EasyJson");
         if (!_logger)
@@ -101,6 +101,7 @@ namespace easyjson
             {
                 throw std::runtime_error("Invalid format for object in configuration file.");
             }
+
             for (const auto &key : object.getMemberNames())
             {
                 const auto &value = object[key];
@@ -184,7 +185,7 @@ namespace easyjson
     }
 
     /**
-     * @brief Process and store a configuration value in the EasyJsonCPP configuration map.
+     * @brief Process and store a configuration value in the EasyJsonCPP multidimensional configuration map.
      *
      * This function is responsible for processing a key-value pair from a JSON configuration file.
      * It checks the type of the JSON value (string or integer) and stores it in the configuration map.
@@ -192,20 +193,21 @@ namespace easyjson
      * @param value The JSON value associated with the key.
      * @throws std::runtime_error if the JSON value is not a string or an integer.
      */
-    void EasyJsonCPP::processConfigValue(const std::string &key,
-                                         const Json::Value &value)
+    void EasyJsonCPP::processConfigValue(const std::string &sectionName,
+                                         const Json::Value &sectionValue)
     {
-        if (value.isString())
+        _logger->debug("Processing data in per section in config file.");
+
+        if (sectionValue.isObject())
         {
-            this->_configMap.emplace(key, value.asString());
-        }
-        else if (value.isInt())
-        {
-            this->_configMap.emplace(key, std::to_string(value.asInt()));
+            for (const auto &key : sectionValue.getMemberNames())
+            {
+                this->_configMap[sectionName][key] = sectionValue[key].asString();
+            }
         }
         else
         {
-            throw std::runtime_error("Invalid format for object value in configuration file.");
+            throw std::runtime_error("Invalid data format in configuration file.");
         }
     }
 }
