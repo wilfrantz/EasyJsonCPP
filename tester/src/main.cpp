@@ -25,10 +25,10 @@ using namespace easyjson;
 
 int main()
 {
-    Tester test;
-    EasyJsonCPP configLoader("config.json", test._targetKeys);
+    Tester *test;
+    EasyJsonCPP configLoader("easy_config.json");
     configLoader.loadConfig();
-    test.printNestedMap();
+    test->printNestedMap();
 
     return EXIT_SUCCESS;
 }

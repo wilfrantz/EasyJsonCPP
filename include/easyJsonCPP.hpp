@@ -37,11 +37,9 @@ namespace easyjson
     {
     public:
         explicit EasyJsonCPP(const std::string &confifFile = "easyJson_config.json",
-                             const std::vector<std::string> targets);
+                             const std::vector<std::string> targets = {});
 
-        // std::map<std::string, std::string> _configMap;
         void loadConfig(std::vector<std::string> targetKeys = {});
-        // TODO: Use a multidimensional map instead.
         std::map<std::string, std::map<std::string, std::string>> _configMap;
 
         // void setLogLevel(const std::string &level);

@@ -1,7 +1,21 @@
 
 # easyJsonCPP
 
-`easyJsonCPP` is a streamlined C++ library designed for effortless integration and management of JSON configuration files. It abstracts the complexities of JSON parsing, allowing developers to efficiently handle configuration data within their C++ applications.
+`easyJsonCPP` is a streamlined `C++` library designed for effortless integration and management of `JSON` configuration files. It abstracts the complexities of JSON parsing, allowing developers to efficiently handle configuration data within their `C++` applications.
+
+<u>Table of Contents</u>
+
+- [easyJsonCPP](#easyjsoncpp)
+  - [Features](#features)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Progress | `TODO`](#progress--todo)
+  - [Possible Improvements](#possible-improvements)
+  - [Contributing to `easyJsonCPP`](#contributing-to-easyjsoncpp)
+  - [License](#license)
+  - [Contact](#contact)
+    - [Notes](#notes)
 
 ## Features
 
@@ -37,7 +51,16 @@ int main() {
 }
 ```
 
-# Possible Improvements | `TODO`
+## Progress | `TODO`
+
+- [x] Create [design document](https://dede.dev/posts/Building-Compiled-Libraries/){: target="_blank"}.
+- [x] Build the Structure.
+  - [x] Implement core functionality.
+  - [ ] Load configuration data into each interface.
+- [ ] Create Build Management `cmakefile.txt`.
+- [ ] Build Unit Test.
+
+## Possible Improvements
 
 - Configuration File Setter: The library could benefit from a method to set _configFile after constructing an EasyJsonCPP object. Currently, it seems that `_configFile` must be set through the constructor only.
 - Error Messages: While the error messages are clear, they could be more descriptive in some cases. For example, specifying which key or value caused an error could be helpful for debugging.
@@ -46,7 +69,7 @@ int main() {
 - Dependency Management: There's an assumption that all required libraries (like JSONCPP and spdlog) are pre-installed and configured in the user's environment. Providing a setup script or instructions for installing these dependencies could enhance user experience.
 - Unit Tests: Adding unit tests for each method would be beneficial for ensuring code quality, especially for a library dealing with file parsing and configuration management.
 
-## Contributing to easyJsonCPP
+## Contributing to `easyJsonCPP`
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 

@@ -1,7 +1,7 @@
 [
   {
     "info": {
-      "mode": "release",
+      "mode": "debug",
       "project": "MyProject",
       "version": "(v2.0.0)",
       "note": "Sample data for testing.",

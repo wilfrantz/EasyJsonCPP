@@ -12,6 +12,7 @@ namespace easyjson
             _logger = spdlog::stdout_color_mt("EasyJson");
         }
     }
+
     /**
      * @brief Loads the JSON configuration file into the application.
      * This method checks if the configuration file path is set and non-empty. It then attempts to open the file,
