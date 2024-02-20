@@ -19,7 +19,7 @@ option(BUILD_TESTS "Build tests" OFF)
 add_compile_definitions(ENGINE_VERSION="${PROJECT_VERSION}")
 
 # Include directories
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include) # Adjust include directory as needed
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include) 
 
 # Define the source files for the executable
 set(SOURCE_FILES
