@@ -32,14 +32,20 @@
 
 namespace easyjson
 {
-
     class EasyJsonCPP
     {
     public:
-        explicit EasyJsonCPP(const std::string &confifFile = "easyJson_config.json",
-                             const std::vector<std::string> targets = {});
-
-        void loadConfig(std::vector<std::string> targetKeys = {});
+        explicit EasyJsonCPP(const std::string &configFile = "easyJson_config.json",
+                             const std::vector<std::string> targets = {})
+            : _configFile(configFile), _targetKeys(targets)
+        {
+            _logger = spdlog::get("EasyJson");
+            if (!_logger)
+            {
+                _logger = spdlog::stdout_color_mt("EasyJson");
+            }
+        }
+        void loadConfig(std::vector<std::string> targetKeys);
         std::map<std::string, std::map<std::string, std::string>> _configMap;
 
         // void setLogLevel(const std::string &level);
@@ -58,7 +64,6 @@ namespace easyjson
         const std::vector<std::string> _targetKeys;
         static std::shared_ptr<spdlog::logger> _logger;
     };
-
 }
 
 #endif // EASYJSONCPP_H

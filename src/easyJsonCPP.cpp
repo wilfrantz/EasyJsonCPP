@@ -2,16 +2,6 @@
 
 namespace easyjson
 {
-    explicit EasyJsonCPP::EasyJsonCPP(const std::string &configFile = "easyJson_config.json",
-                                      const std::vector<std::string> targets)
-        : _configFile(configFile), _targetKeys(targets)
-    {
-        _logger = spdlog::get("EasyJson");
-        if (!_logger)
-        {
-            _logger = spdlog::stdout_color_mt("EasyJson");
-        }
-    }
 
     /**
      * @brief Loads the JSON configuration file into the application.

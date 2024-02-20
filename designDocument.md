@@ -1,8 +1,8 @@
-# easyJsonCPP Library Design Document
+# EasyJsonCPP: Design Document
 
 ## Introduction
 
-`easyJsonCPP` is a C++ library designed to simplify the integration and handling of JSON configuration files in C++ projects. It provides intuitive functions for reading, writing, and managing JSON data, aiming to streamline the process of working with JSON in C++.
+EasyJsonCPP is a C++ library designed to simplify the integration and handling of JSON configuration files in C++ projects. It provides intuitive functions for reading, writing, and managing JSON data, aiming to streamline the process of working with JSON in C++.
 
 ## Goals
 
