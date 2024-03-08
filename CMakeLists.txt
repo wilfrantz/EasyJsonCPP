@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(easyjson VERSION 1.0.0 LANGUAGES CXX)
+project(easyjson VERSION 0.0.1 LANGUAGES CXX)
 
 # Set C++ standard to 17
 set(CMAKE_CXX_STANDARD 17)
@@ -22,12 +22,21 @@ add_compile_definitions(ENGINE_VERSION="${PROJECT_VERSION}")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include) 
 
 # Define the source files for the executable
-set(SOURCE_FILES
+# set(SOURCE_FILES
+#     src/easyJsonCPP.cpp
+# )
+
+add_library(
     src/easyJsonCPP.cpp
 )
 
+target_include_directories(easyjson
+    PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 # Create the executable
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+# add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 # Set the build type to Debug if not explicitly set
 if(NOT CMAKE_BUILD_TYPE)

@@ -64,6 +64,6 @@ namespace easyjson
         const std::vector<std::string> _targetKeys;
         static std::shared_ptr<spdlog::logger> _logger;
     };
-}
+} // ! EasyJson namespace 
 
 #endif // EASYJSONCPP_H
