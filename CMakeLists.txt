@@ -26,6 +26,7 @@ target_compile_definitions(${PROJECT_NAME}
 )
 
 # Include directories
+include_directories(include)
 target_include_directories(${PROJECT_NAME}
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include

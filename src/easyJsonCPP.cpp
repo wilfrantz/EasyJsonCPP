@@ -1,7 +1,10 @@
-#include "include/easyJsonCPP.hpp"
+#include "easyJsonCPP.hpp"
+
 
 namespace easyjson
 {
+    std::shared_ptr<spdlog::logger> EasyJsonCPP::_logger = spdlog::stdout_color_mt("easyJson");
+
     /**
      * @brief Loads the JSON configuration file into the application.
      * This method checks if the configuration file path is set and non-empty. It then attempts to open the file,
