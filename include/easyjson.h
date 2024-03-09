@@ -28,7 +28,7 @@
 #ifndef EASYJSONCPP_H
 #define EASYJSONCPP_H
 
-#include "header.hpp"
+#include "header.h"
 
 namespace easyjson
 {

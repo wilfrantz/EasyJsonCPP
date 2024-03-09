@@ -13,7 +13,7 @@
 #ifndef TESTER_HPP
 #define TESTER_HPP
 
-#include "include/easyJsonCPP.hpp"
+#include <easyjson.h>
 
 using namespace easyjson;
 namespace tester

@@ -1,4 +1,4 @@
-#include "easyJsonCPP.hpp"
+#include "easyjson.h"
 
 
 namespace easyjson

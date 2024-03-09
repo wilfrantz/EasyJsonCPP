@@ -18,7 +18,7 @@
  * @author: (C) 2023 Wilfrantz Dede
  */
 
-#include "include/tester.hpp"
+#include "tester.h"
 
 using namespace tester;
 using namespace easyjson;
