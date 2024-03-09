@@ -12,36 +12,24 @@ find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_library(JSONCPP_LIBRARIES NAMES jsoncpp)
 
-# Option to build tests
-option(BUILD_TESTS "Build tests" OFF)
-
-# Add compile definitions
-add_compile_definitions(ENGINE_VERSION="${PROJECT_VERSION}")
-
-# Include directories
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include) 
-
-# Define the source files for the executable
-# set(SOURCE_FILES
-#     src/easyJsonCPP.cpp
-# )
-
-add_library(
+# Define the source files for the library
+set(SOURCE_FILES
     src/easyJsonCPP.cpp
 )
 
-target_include_directories(easyjson
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
+# Create the library
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+
+# Add compile definitions
+target_compile_definitions(${PROJECT_NAME}
+    PUBLIC ENGINE_VERSION="${PROJECT_VERSION}"
 )
 
-# Create the executable
-# add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-
-# Set the build type to Debug if not explicitly set
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug)
-endif()
+# Include directories
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 
 # Link libraries based on the operating system
 if(UNIX AND NOT APPLE)
@@ -58,10 +46,16 @@ elseif(APPLE)
     )
 endif()
 
+# Set the build type to Debug if not explicitly set
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
 # Optionally build and run tests
-# if(BUILD_TESTS)
-#     message(STATUS "Building tests ...")
-#     enable_testing()
-#     add_subdirectory(test)
-#     add_test(NAME ${PROJECT_NAME}_tests COMMAND test/${PROJECT_NAME}_test)
-# endif()
+option(BUILD_TESTS "Build tests" OFF)
+if(BUILD_TESTS)
+    message(STATUS "Building tests ...")
+    enable_testing()
+    add_subdirectory(test)
+    add_test(NAME ${PROJECT_NAME}_tests COMMAND test/${PROJECT_NAME}_test)
+endif()
