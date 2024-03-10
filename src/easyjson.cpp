@@ -13,7 +13,8 @@ namespace easyjson
      * throws a runtime exception. It also validates and processes the JSON content through 'validateConfigRoot'
      * and 'parseConfig' methods.
      */
-    void EasyJsonCPP::loadConfig(std::vector<std::string> targetKeys = {})
+    // void EasyJsonCPP::loadConfig(std::vector<std::string> targetKeys = {})
+    void EasyJsonCPP::loadConfig()
     {
         if (_configFile.empty())
         {

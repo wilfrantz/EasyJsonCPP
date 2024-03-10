@@ -24,8 +24,8 @@ namespace tester
     public:
         Tester() {}
 
-        std::map<std::string, std::string> _configMap;
-        void printNestedMap(const std::string &prefix = "");
+        // std::map<std::string, std::string> _configMap;
+        void printNestedMap(const std::string &prefix);
         std::shared_ptr<spdlog::logger> _logger = spdlog::stdout_color_mt("Tester");
         const std::vector<std::string> _targetKeys = {"twitter", "tiktok", "instagram", "facebook"};
 
