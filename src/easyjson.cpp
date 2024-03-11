@@ -204,4 +204,21 @@ namespace easyjson
             throw std::runtime_error("Invalid data format in configuration file.");
         }
     }
-} // ! EasyJson namespace 
+
+    /// @brief Process the target keys in the config file
+    /// @param configValue[in] The value of the target key
+    /// @param key[in] The name of the target key
+    /// @return none.
+    void EasyJsonCPP::processTargetKeys(const Json::Value &configValue, const std::string &key)
+    {
+        _logger->debug("Processing target key: {}", key);
+        if (configValue.isArray())
+        {
+        }
+        else
+        {
+            // Invalid value type
+            throw std::runtime_error("Invalid format for object value in the configuration file.");
+        }
+    }
+} // ! EasyJson namespace

@@ -28,7 +28,7 @@
 #ifndef EASYJSONCPP_H
 #define EASYJSONCPP_H
 
-#include "header.h"
+#include <header.h>
 
 namespace easyjson
 {
@@ -60,11 +60,13 @@ namespace easyjson
         void processConfigValue(const std::string &key, const Json::Value &value);
         virtual void processTargetKeys(const Json::Value &configValue, const std::string &key);
 
+        ~EasyJsonCPP() = default;
+
     private:
         std::string _configFile;
         const std::vector<std::string> _targetKeys;
         static std::shared_ptr<spdlog::logger> _logger;
     };
-} // ! EasyJson namespace 
+} // ! EasyJson namespace
 
 #endif // EASYJSONCPP_H
