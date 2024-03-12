@@ -22,26 +22,23 @@ namespace easyjson
             throw std::runtime_error(error_msg);
         }
 
-        std::ifstream file(_configFile);
-        if (!file)
-        {
-            std::string error_msg = "Could not open config file: " + _configFile;
-            _logger->error(error_msg);
-            throw std::runtime_error(error_msg);
-        }
 
-        _logger->debug("Loading configuration file: {}", _configFile);
 
         try
         {
-            Json::Value root;
-            file >> root;
-            if (file.fail())
+            _logger->debug("Loading configuration file: {}", _configFile);
+
+            std::ifstream file(_configFile);
+
+            if (!file.is_open())
             {
-                std::string error_msg = "Failed to parse JSON from file: " + _configFile;
+                std::string error_msg = "Could not open config file: " + _configFile;
                 _logger->error(error_msg);
                 throw std::runtime_error(error_msg);
             }
+
+            Json::Value root;
+            file >> root;
 
             validateConfigRoot(root);
             parseConfig(root);
