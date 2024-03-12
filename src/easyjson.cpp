@@ -1,6 +1,5 @@
 #include "easyjson.h"
 
-
 namespace easyjson
 {
     std::shared_ptr<spdlog::logger> EasyJsonCPP::_logger = spdlog::stdout_color_mt("easyJson");
@@ -190,7 +189,7 @@ namespace easyjson
     void EasyJsonCPP::processConfigValue(const std::string &sectionName,
                                          const Json::Value &sectionValue)
     {
-        _logger->debug("Processing data in per section in config file.");
+        _logger->debug("Processing data in config file.");
 
         if (sectionValue.isObject())
         {
@@ -214,11 +213,14 @@ namespace easyjson
         _logger->debug("Processing target key: {}", key);
         if (configValue.isArray())
         {
+            // Process array value
+            _logger->info("Implement virtual method in derived class.");
+            exit(EXIT_SUCCESS);
         }
         else
         {
             // Invalid value type
-            throw std::runtime_error("Invalid format for object value in the configuration file.");
+            throw std::runtime_error("Implement in derived class.");
         }
     }
 } // ! EasyJson namespace

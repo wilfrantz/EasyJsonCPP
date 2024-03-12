@@ -26,8 +26,8 @@ using namespace easyjson;
 int main()
 {
     Tester *test;
-    EasyJsonCPP configLoader("easy_config.json");
-    configLoader.loadConfig();
+    EasyJsonCPP loader("easy_config.json");
+    loader.loadConfig();
 
     return EXIT_SUCCESS;
 }

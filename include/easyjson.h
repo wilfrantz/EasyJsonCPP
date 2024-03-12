@@ -35,7 +35,9 @@ namespace easyjson
     class EasyJsonCPP
     {
     public:
-        explicit EasyJsonCPP(const std::string &configFile = "easyJson_config.json",
+
+
+        explicit EasyJsonCPP(const std::string &configFile = {},
                              const std::vector<std::string> targets = {})
             : _configFile(configFile), _targetKeys(targets)
         {
@@ -45,6 +47,7 @@ namespace easyjson
                 _logger = spdlog::stdout_color_mt("EasyJson");
             }
         }
+
         // void loadConfig(std::vector<std::string> targetKeys);
         void loadConfig();
         std::map<std::string, std::map<std::string, std::string>> _configMap;
@@ -58,13 +61,15 @@ namespace easyjson
         void parseArrayConfig(const Json::Value &arrayValue);
         void parseObjectConfig(const Json::Value &objectValue);
         void processConfigValue(const std::string &key, const Json::Value &value);
-        virtual void processTargetKeys(const Json::Value &configValue, const std::string &key);
+
+        virtual void processTargetKeys(const Json::Value &configValue,
+                                       const std::string &key);
 
         ~EasyJsonCPP() = default;
 
     private:
         std::string _configFile;
-        const std::vector<std::string> _targetKeys;
+        const std::vector<std::string> _targetKeys{""};
         static std::shared_ptr<spdlog::logger> _logger;
     };
 } // ! EasyJson namespace

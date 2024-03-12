@@ -1,20 +1,22 @@
 #!/bin/bash
-#
 
+# Configuration file path
+CONFIG_FILE="../easy_config.json"
 
-# remove build direcotry if exixts
-if [ -d ./build/ ]; then
-	rm -rf ./build
+# Remove build directory if it exists
+if [ -d "./build" ]; then
+    rm -rf "./build"
 fi
 
-# create build direcotry
-mkdir -p ./build && cd ./build || exit
+# Create build directory
+mkdir -p "./build" && cd "./build" || exit
 
-# generate Makefiles
+# Generate Makefiles
 cmake ..
 
 # Build project
 cmake --build .
 
-
-
+# Copy configuration file
+echo "Copying $CONFIG_FILE"
+cp "$CONFIG_FILE" . || echo "Copy failed." 
