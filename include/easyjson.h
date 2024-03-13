@@ -35,9 +35,9 @@ namespace easyjson
     class EasyJsonCPP
     {
     public:
+        EasyJsonCPP() = default;
 
-
-        explicit EasyJsonCPP(const std::string &configFile = {},
+        explicit EasyJsonCPP(const std::string &configFile,
                              const std::vector<std::string> targets = {})
             : _configFile(configFile), _targetKeys(targets)
         {
@@ -69,7 +69,7 @@ namespace easyjson
 
     private:
         std::string _configFile;
-        const std::vector<std::string> _targetKeys{""};
+        const std::vector<std::string> _targetKeys{"easyJson", "jsonLib"};
         static std::shared_ptr<spdlog::logger> _logger;
     };
 } // ! EasyJson namespace

@@ -22,11 +22,9 @@ namespace easyjson
             throw std::runtime_error(error_msg);
         }
 
-
-
         try
         {
-            _logger->debug("Loading configuration file: {}", _configFile);
+            _logger->debug("Loading configuration file: {}", this->_configFile);
 
             std::ifstream file(_configFile);
 
@@ -188,16 +186,18 @@ namespace easyjson
     {
         _logger->debug("Processing data in config file.");
 
-        if (sectionValue.isObject())
+        if (sectionValue.isString())
         {
-            for (const auto &key : sectionValue.getMemberNames())
-            {
-                this->_configMap[sectionName][key] = sectionValue[key].asString();
-            }
+            // for Debugging
+            this->_configMap.emplace(sectionName, sectionValue.asString());
+        }
+        else if (sectionValue.isInt())
+        {
+            this->_configMap.emplace(sectionName, std::to_string(sectionValue.asInt()));
         }
         else
         {
-            throw std::runtime_error("Invalid data format in configuration file.");
+            throw std::runtime_error("Invalid format for object value in configuration file.");
         }
     }
 
