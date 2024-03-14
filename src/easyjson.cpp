@@ -3,6 +3,7 @@
 namespace easyjson
 {
     std::shared_ptr<spdlog::logger> EasyJsonCPP::_logger = spdlog::stdout_color_mt("easyJson");
+    std::map<std::string, std::string> EasyJsonCPP::_configMap;
 
     /**
      * @brief Loads the JSON configuration file into the application.
@@ -222,4 +223,65 @@ namespace easyjson
             throw std::runtime_error("Implement in derived class.");
         }
     }
+
+    /// @brief Read from the config file
+    /// @param key[in] The key to read from the config file.
+    /// @return The value of the key or an error string.
+    const std::string &EasyJsonCPP::getFromConfigMap(const std::string &key,
+                                                     const std::map<std::string, std::string> &configMap)
+    {
+        static std::string errorString;
+
+        try
+        {
+            return configMap.at(key);
+        }
+        catch (const std::out_of_range &)
+        {
+            _logger->error("Error retrieving key: {} from config file.", key);
+            static const std::string errorString = "Error retrieving " + key + " from config file";
+            return errorString;
+            exit(1);
+        }
+        return errorString;
+    }
+
+    /// @brief Set the log level.
+    /// @param level
+    /// return none.
+    void EasyJsonCPP::setLogLevel(const std::string &level)
+    {
+        spdlog::level::level_enum log_level;
+
+        switch (hash(level.c_str()))
+        {
+        case hash("debug"):
+            log_level = spdlog::level::debug;
+            break;
+        case hash("info"):
+            log_level = spdlog::level::info;
+            break;
+        case hash("warn"):
+            log_level = spdlog::level::warn;
+            break;
+        case hash("error"):
+            log_level = spdlog::level::err;
+            break;
+        case hash("critical"):
+            log_level = spdlog::level::critical;
+            break;
+        case hash("off"):
+            log_level = spdlog::level::off;
+            break;
+        default:
+            log_level = spdlog::level::debug;
+            spdlog::debug("Invalid log level '{}'", level);
+            return;
+        }
+
+        spdlog::set_level(log_level);
+        spdlog::stdout_color_mt("sipeto");
+        _logger->debug("Log level set to: {} \n", level);
+    }
+
 } // ! EasyJson namespace

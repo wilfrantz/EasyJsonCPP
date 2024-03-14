@@ -23,28 +23,23 @@
 
     // Tester method to print the content of the nested map
     // void Tester::printNestedMap(const std::string &prefix = "")
-    void Tester::printNestedMap(const std::string &prefix = "")
+    // void Tester::printNestedMap(const std::string &prefix = "")
+    void Tester::displayMap()
     {
-        for (const auto &element : _configMap)
+        if (!_configMapRef.empty())
         {
-            std::cout << prefix << element.first << " :\n";
-            for (const auto &innerElement : element.second)
+
+            _logger->debug("Printing the map to stdout.");
+
+            for (const auto &element : _configMapRef)
             {
-                std::cout << prefix << "\t" << innerElement.first << " : " << innerElement.second << std::endl;
+                _logger->debug(element.first + " : " + element.second);
             }
         }
+        else
+        {
+            _logger->error("Map is empty.");
+            exit(EXIT_FAILURE);
+        }
     }
-
-    // void Tester::printNestedMap(const std::string &prefix = "")
-    // {
-    //     for (const auto &pair : _configMap)
-    //     {
-    //         std::cout << prefix << pair.first << ": " << std::endl;
-
-    //         for (const auto &innerPair : pair.second)
-    //         {
-    //             std::cout << prefix << "  " << innerPair.first << ": " << innerPair.second << std::endl;
-    //         }
-    //     }
-    // }
 }

@@ -25,11 +25,13 @@ using namespace easyjson;
 
 int main()
 {
-    Tester *test;
     EasyJsonCPP loader("easy_config.json");
     loader.loadConfig();
 
-    test->printNestedMap("");
+    loader.setLogLevel(loader.getFromConfigMap("mode"));
+
+    Tester test;
+    test.displayMap();
 
     return EXIT_SUCCESS;
 }

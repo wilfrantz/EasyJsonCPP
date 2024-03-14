@@ -23,14 +23,14 @@ namespace tester
     public:
         Tester(){};
 
-        void printNestedMap(const std::string &prefix);
+        // void printNestedMap(const std::string &prefix);
+        void displayMap();
         std::shared_ptr<spdlog::logger> _logger = spdlog::stdout_color_mt("Tester");
         const std::vector<std::string> _targetKeys = {"twitter", "tiktok", "instagram", "facebook"};
 
         void processTargetKeys(const Json::Value &configValue, const std::string &key) override;
 
-        // std::map<std::string, std::map<std::string, std::string>> _configMap = EasyJsonCPP::_configMap;
-        std::map<std::string, std::string> _configMap = EasyJsonCPP::_configMap;
+        std::map<std::string, std::string> &_configMapRef = EasyJsonCPP::_configMap;
 
     private:
     };

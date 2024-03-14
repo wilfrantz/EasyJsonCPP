@@ -51,9 +51,9 @@ namespace easyjson
         // void loadConfig(std::vector<std::string> targetKeys);
         void loadConfig();
         // std::map<std::string, std::map<std::string, std::string>> _configMap;
-        std::map<std::string, std::string> _configMap;
+        static std::map<std::string, std::string> _configMap;
 
-        // void setLogLevel(const std::string &level);
+        void setLogLevel(const std::string &level);
 
         // Methods to parse the config Json file.
         void parseConfig(const Json::Value &root);
@@ -66,12 +66,21 @@ namespace easyjson
         virtual void processTargetKeys(const Json::Value &configValue,
                                        const std::string &key);
 
+        const std::string &getFromConfigMap(const std::string &key,
+                                            const std::map<std::string,
+                                                           std::string> &configMap = _configMap);
+
         ~EasyJsonCPP() = default;
 
     private:
         std::string _configFile;
         const std::vector<std::string> _targetKeys{"easyJson", "jsonLib"};
         static std::shared_ptr<spdlog::logger> _logger;
+
+        static constexpr std::size_t hash(const char *s, std::size_t h = 0)
+        {
+            return (*s == '\0') ? h : hash(s + 1, (h * 31) + static_cast<unsigned char>(*s));
+        }
     };
 } // ! EasyJson namespace
 
