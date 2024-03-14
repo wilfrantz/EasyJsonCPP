@@ -29,7 +29,8 @@ namespace tester
 
         void processTargetKeys(const Json::Value &configValue, const std::string &key) override;
 
-        std::map<std::string, std::map<std::string, std::string>> _configMap = EasyJsonCPP::_configMap;
+        // std::map<std::string, std::map<std::string, std::string>> _configMap = EasyJsonCPP::_configMap;
+        std::map<std::string, std::string> _configMap = EasyJsonCPP::_configMap;
 
     private:
     };

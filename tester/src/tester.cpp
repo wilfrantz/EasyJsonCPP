@@ -25,14 +25,26 @@
     // void Tester::printNestedMap(const std::string &prefix = "")
     void Tester::printNestedMap(const std::string &prefix = "")
     {
-        for (const auto &pair : _configMap)
+        for (const auto &element : _configMap)
         {
-            std::cout << prefix << pair.first << ": " << std::endl;
-
-            for (const auto &innerPair : pair.second)
+            std::cout << prefix << element.first << " :\n";
+            for (const auto &innerElement : element.second)
             {
-                std::cout << prefix << "  " << innerPair.first << ": " << innerPair.second << std::endl;
+                std::cout << prefix << "\t" << innerElement.first << " : " << innerElement.second << std::endl;
             }
         }
     }
+
+    // void Tester::printNestedMap(const std::string &prefix = "")
+    // {
+    //     for (const auto &pair : _configMap)
+    //     {
+    //         std::cout << prefix << pair.first << ": " << std::endl;
+
+    //         for (const auto &innerPair : pair.second)
+    //         {
+    //             std::cout << prefix << "  " << innerPair.first << ": " << innerPair.second << std::endl;
+    //         }
+    //     }
+    // }
 }

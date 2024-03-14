@@ -29,5 +29,7 @@ int main()
     EasyJsonCPP loader("easy_config.json");
     loader.loadConfig();
 
+    test->printNestedMap("");
+
     return EXIT_SUCCESS;
 }

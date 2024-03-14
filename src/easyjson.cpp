@@ -188,15 +188,17 @@ namespace easyjson
 
         if (sectionValue.isString())
         {
-            // for Debugging
-            this->_configMap.emplace(sectionName, sectionValue.asString());
+            // Insert the string value into configMap
+            _configMap.emplace(sectionName, sectionValue.asString());
         }
         else if (sectionValue.isInt())
         {
-            this->_configMap.emplace(sectionName, std::to_string(sectionValue.asInt()));
+            // Convert integer value to string and insert into configMap
+            _configMap.emplace(sectionName, std::to_string(sectionValue.asInt()));
         }
         else
         {
+            // Invalid value type
             throw std::runtime_error("Invalid format for object value in configuration file.");
         }
     }

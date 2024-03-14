@@ -50,7 +50,8 @@ namespace easyjson
 
         // void loadConfig(std::vector<std::string> targetKeys);
         void loadConfig();
-        std::map<std::string, std::map<std::string, std::string>> _configMap;
+        // std::map<std::string, std::map<std::string, std::string>> _configMap;
+        std::map<std::string, std::string> _configMap;
 
         // void setLogLevel(const std::string &level);
 
