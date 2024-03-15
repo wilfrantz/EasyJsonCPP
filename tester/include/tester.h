@@ -21,11 +21,18 @@ namespace tester
     class Tester final : public EasyJsonCPP
     {
     public:
-        Tester(){};
+        Tester()
+        {
+            _logger = spdlog::get("Tester");
+            if (!_logger)
+            {
+                _logger = spdlog::stdout_color_mt("Tester");
+            }
+        };
 
         // void printNestedMap(const std::string &prefix);
         void displayMap();
-        std::shared_ptr<spdlog::logger> _logger = spdlog::stdout_color_mt("Tester");
+        void displayInfo();
         const std::vector<std::string> _targetKeys = {"twitter", "tiktok", "instagram", "facebook"};
 
         void processTargetKeys(const Json::Value &configValue, const std::string &key) override;
@@ -33,6 +40,7 @@ namespace tester
         std::map<std::string, std::string> &_configMapRef = EasyJsonCPP::_configMap;
 
     private:
+        std::shared_ptr<spdlog::logger> _logger;
     };
 }
 

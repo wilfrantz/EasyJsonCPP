@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Configuration file path
-CONFIG_FILE="../easy_config.json"
-
 # Remove build directory if it exists
 if [ -d "./build" ]; then
     rm -rf "./build"
@@ -16,7 +13,3 @@ cmake ..
 
 # Build project
 cmake --build .
-
-# Copy configuration file
-echo "Copying $CONFIG_FILE"
-cp "$CONFIG_FILE" . || echo "Copy failed." 

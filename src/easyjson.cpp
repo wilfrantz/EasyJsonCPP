@@ -284,4 +284,68 @@ namespace easyjson
         _logger->debug("Log level set to: {} \n", level);
     }
 
+    /// @brief  Print a welcome message
+    /// @param  none.
+    /// @return none.
+    void EasyJsonCPP::displayInfo()
+    {
+
+        const std::map<std::string, std::string> infoDataMap = readInfoData();
+
+        _logger->info("{} {}", getFromConfigMap("project", infoDataMap),
+                      getFromConfigMap("version", infoDataMap));
+        _logger->info(getFromConfigMap("description", infoDataMap));
+        _logger->info("Author: {}", getFromConfigMap("author", infoDataMap));
+
+// Get the jsoncpp version, if available
+#ifdef JSONCPP_VERSION_STRING
+        _logger->debug("Using jsoncpp Version: {}.", JSONCPP_VERSION_STRING);
+#else
+        _logger->warn("Could not determine jsoncpp version.");
+#endif
+
+// Get the spdlog version, if available
+#ifdef SPDLOG_VER_MAJOR
+        _logger->debug("Using spdlog Version: {}.{}.{}", SPDLOG_VER_MAJOR, SPDLOG_VER_MINOR, SPDLOG_VER_PATCH);
+#else
+        _logger->warn("Could not determine spdlog version.");
+#endif
+
+        // Display the configuration file in debug mode.
+        for (const auto &element : this->_configMap)
+        {
+            _logger->debug("{} : {}", element.first, element.second);
+        }
+    }
+
+    // Function to read JSON data from infodata file 
+    std::map<std::string, std::string> EasyJsonCPP::readInfoData()
+    {
+        const std::string &filename = "infodata.json";
+
+        std::ifstream file(filename);
+        Json::Value root;
+        Json::Reader reader;
+        std::map<std::string, std::string> dataMap;
+
+        // Read the file and parse JSON
+        if (reader.parse(file, root))
+        {
+            const Json::Value &info = root["info"];
+
+            // Iterate over the members of the "info" object and save them into the map
+            for (const auto &key : info.getMemberNames())
+            {
+                dataMap[key] = info[key].asString();
+            }
+        }
+        else
+        {
+            _logger->error("Failed to parse JSON from file: {}", filename);
+            throw std::runtime_error("There was an error with the InfoData file");
+        }
+
+        return dataMap;
+    }
+
 } // ! EasyJson namespace

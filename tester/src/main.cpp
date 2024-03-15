@@ -31,6 +31,7 @@ int main()
     loader.setLogLevel(loader.getFromConfigMap("mode"));
 
     Tester test;
+    test.displayInfo();
     test.displayMap();
 
     return EXIT_SUCCESS;

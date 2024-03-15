@@ -1,5 +1,6 @@
 #!/bin/bash
 
+TESTER="../tester/"
 # Remove build directory if exists
 if [ -d ./build/ ]; then
 	rm -rf ./build
@@ -25,3 +26,5 @@ cp libeasyjson.dylib "$INSTALL_DIR/lib"
 # Copy the header files
 cp -R ../include/* "$INSTALL_DIR/include/"
 
+# Copy config files to tester(s)
+cp -R ../configs/* "$TESTER"

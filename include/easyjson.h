@@ -46,17 +46,24 @@ namespace easyjson
             {
                 _logger = spdlog::stdout_color_mt("EasyJson");
             }
+
+            // display library information
+            displayInfo();
         }
 
         // void loadConfig(std::vector<std::string> targetKeys);
         void loadConfig();
+        void displayInfo();
+
         // std::map<std::string, std::map<std::string, std::string>> _configMap;
         static std::map<std::string, std::string> _configMap;
 
         void setLogLevel(const std::string &level);
 
-        // Methods to parse the config Json file.
-        void parseConfig(const Json::Value &root);
+        std::map<std::string, std::string> readInfoData();
+
+            // Methods to parse the config Json file.
+            void parseConfig(const Json::Value &root);
         bool isTargetKey(const std::string &key) const;
         void validateConfigRoot(const Json::Value &root);
         void parseArrayConfig(const Json::Value &arrayValue);
@@ -74,8 +81,9 @@ namespace easyjson
 
     private:
         std::string _configFile;
-        const std::vector<std::string> _targetKeys{"easyJson", "jsonLib"};
+        const std::string VERSION = "0.0.1";
         static std::shared_ptr<spdlog::logger> _logger;
+        const std::vector<std::string> _targetKeys{"easyJson", "jsonLib"};
 
         static constexpr std::size_t hash(const char *s, std::size_t h = 0)
         {
