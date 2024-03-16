@@ -26,14 +26,14 @@ namespace tester
         // Tester method to print the content of the nested map
         // void Tester::printNestedMap(const std::string &prefix = "")
         // void Tester::printNestedMap(const std::string &prefix = "")
-        void Tester::displayMap()
+        void Tester::displayMap(std::map<std::string, std::string> &configMap)
         {
-                if (!_configMapRef.empty())
+                if (!configMap.empty())
                 {
 
                         _logger->debug("Printing the map to stdout.");
 
-                        for (const auto &element : _configMapRef)
+                        for (const auto &element : configMap)
                         {
                                 _logger->debug(element.first + " : " + element.second);
                         }

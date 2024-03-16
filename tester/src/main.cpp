@@ -25,14 +25,16 @@ using namespace easyjson;
 
 int main()
 {
-    EasyJsonCPP loader("easy_config.json");
+    const std::vector<std::string> _targets = {"twitter", "tiktok", "instagram"};
+
+    EasyJsonCPP loader("easy_config.json", _targets);
     loader.loadConfig();
 
     loader.setLogLevel(loader.getFromConfigMap("mode"));
 
     Tester test;
     test.displayInfo();
-    test.displayMap();
+    test.displayMap(test._configMapRef);
 
     return EXIT_SUCCESS;
 }

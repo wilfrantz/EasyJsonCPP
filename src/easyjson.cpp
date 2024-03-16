@@ -214,7 +214,7 @@ namespace easyjson
         if (configValue.isArray())
         {
             // Process array value
-            _logger->info("Implement virtual method in derived class.");
+            _logger->debug("Implement virtual method in derived class.");
             exit(EXIT_SUCCESS);
         }
         else
@@ -318,7 +318,7 @@ namespace easyjson
         }
     }
 
-    // Function to read JSON data from infodata file 
+    // Function to read JSON data from infodata file
     std::map<std::string, std::string> EasyJsonCPP::readInfoData()
     {
         const std::string &filename = "infodata.json";

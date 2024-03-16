@@ -15,6 +15,35 @@
 
 #include <easyjson.h>
 
+namespace twitter
+{
+    class Twitter
+    {
+        std::map<std::string, std::string> _configMap;
+    };
+}
+namespace instagram
+{
+    class Instagram
+    {
+        std::map<std::string, std::string> _configMap;
+    };
+}
+namespace tiktok
+{
+    class Tiktok
+    {
+        std::map<std::string, std::string> _configMap;
+    };
+}
+namespace
+{
+    class Telegram
+    {
+        std::map<std::string, std::string> _configMap;
+    };
+}
+
 using namespace easyjson;
 namespace tester
 {
@@ -31,9 +60,8 @@ namespace tester
         };
 
         // void printNestedMap(const std::string &prefix);
-        void displayMap();
         void displayInfo();
-        const std::vector<std::string> _targetKeys = {"twitter", "tiktok", "instagram", "facebook"};
+        void displayMap(std::map<std::string, std::string> &configMap);
 
         void processTargetKeys(const Json::Value &configValue, const std::string &key) override;
 

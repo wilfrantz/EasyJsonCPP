@@ -83,7 +83,7 @@ namespace easyjson
         std::string _configFile;
         const std::string VERSION = "0.0.1";
         static std::shared_ptr<spdlog::logger> _logger;
-        const std::vector<std::string> _targetKeys{"easyJson", "jsonLib"};
+        std::vector<std::string> _targetKeys{};
 
         static constexpr std::size_t hash(const char *s, std::size_t h = 0)
         {
