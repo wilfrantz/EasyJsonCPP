@@ -22,7 +22,6 @@ namespace easyjson
             _logger->error(error_msg);
             throw std::runtime_error(error_msg);
         }
-
         try
         {
             _logger->debug("Loading configuration file: {}", this->_configFile);
@@ -208,19 +207,26 @@ namespace easyjson
     /// @param configValue[in] The value of the target key
     /// @param key[in] The name of the target key
     /// @return none.
-    void EasyJsonCPP::processTargetKeys(const Json::Value &configValue, const std::string &key)
+    void EasyJsonCPP::processTargetKeys(const Json::Value &configValue,
+                                        const std::string &key)
     {
         _logger->debug("Processing target key: {}", key);
-        if (configValue.isArray())
+        if (configValue.isObject())
         {
             // Process array value
-            _logger->debug("Implement virtual method in derived class.");
-            exit(EXIT_SUCCESS);
+            for (const auto &element : configValue.getMemberNames())
+            {
+                for (auto &object : _container)
+                {
+                    // if (object->supportsKey(element))
+                    //     loadConfigMap(key, configValue[element], *object);
+                }
+            }
         }
         else
         {
             // Invalid value type
-            throw std::runtime_error("Implement in derived class.");
+            throw std::runtime_error("Unknown Key");
         }
     }
 

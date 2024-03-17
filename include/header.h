@@ -64,6 +64,7 @@
 #include <condition_variable>
 #include <mutex>
 #include <chrono>
+#include <any>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 

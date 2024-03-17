@@ -38,8 +38,9 @@ namespace easyjson
         EasyJsonCPP() = default;
 
         explicit EasyJsonCPP(const std::string &configFile,
-                             const std::vector<std::string> targets = {})
-            : _configFile(configFile), _targetKeys(targets)
+                             const std::vector<std::string> &targets,
+                             std::vector<std::any> &container)
+            : _configFile(configFile), _targetKeys(targets), _container(container)
         {
             _logger = spdlog::get("EasyJson");
             if (!_logger)
@@ -62,8 +63,8 @@ namespace easyjson
 
         std::map<std::string, std::string> readInfoData();
 
-            // Methods to parse the config Json file.
-            void parseConfig(const Json::Value &root);
+        // Methods to parse the config Json file.
+        void parseConfig(const Json::Value &root);
         bool isTargetKey(const std::string &key) const;
         void validateConfigRoot(const Json::Value &root);
         void parseArrayConfig(const Json::Value &arrayValue);
@@ -73,9 +74,23 @@ namespace easyjson
         virtual void processTargetKeys(const Json::Value &configValue,
                                        const std::string &key);
 
+        template <typename T>
+        void processTargetKeys(const Json::Value &configValue,
+                               const std::string &key, const T &object);
+
         const std::string &getFromConfigMap(const std::string &key,
                                             const std::map<std::string,
                                                            std::string> &configMap = _configMap);
+
+        template <typename T>
+        inline void loadConfigMap(const std::string &key,
+                                  const std::string &value,
+                                  const T &object)
+        {
+            object._configMap[key] = value;
+        }
+
+        std::vector<std::any> _container;
 
         ~EasyJsonCPP() = default;
 

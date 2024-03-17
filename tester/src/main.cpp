@@ -21,13 +21,23 @@
 #include "tester.h"
 
 using namespace tester;
+using namespace tiktok;
+using namespace twitter;
 using namespace easyjson;
+using namespace telegram;
+using namespace instagram;
 
 int main()
 {
-    const std::vector<std::string> _targets = {"twitter", "tiktok", "instagram"};
+    Twitter twitterObj;
+    Instagram instagramObj;
+    Tiktok tiktokObj;
+    Telegram telegramObj;
 
-    EasyJsonCPP loader("easy_config.json", _targets);
+    const std::vector<std::string> _targets = {"twitter", "tiktok", "instagram", "telegram"};
+    std::vector<std::any> container{tiktokObj, twitterObj, instagramObj};
+
+    EasyJsonCPP loader("easy_config.json", _targets, container);
     loader.loadConfig();
 
     loader.setLogLevel(loader.getFromConfigMap("mode"));

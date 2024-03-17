@@ -1,5 +1,6 @@
 {
   "info": {
+    "mode": "debug",
     "project": "EasyJson",
     "version": "(v0.0.1)",
     "description": "Simplify JSON configuration file integration",

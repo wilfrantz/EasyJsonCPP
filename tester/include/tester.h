@@ -20,6 +20,11 @@ namespace twitter
     class Twitter
     {
         std::map<std::string, std::string> _configMap;
+
+        inline bool supportsKey(std::string &key) const
+        {
+            return key == "twitter";
+        }
     };
 }
 namespace instagram
@@ -27,6 +32,11 @@ namespace instagram
     class Instagram
     {
         std::map<std::string, std::string> _configMap;
+
+        inline bool supportsKey(std::string &key) const
+        {
+            return key == "instagram";
+        }
     };
 }
 namespace tiktok
@@ -34,13 +44,23 @@ namespace tiktok
     class Tiktok
     {
         std::map<std::string, std::string> _configMap;
+
+        inline bool supportsKey(std::string &key) const
+        {
+            return key == "tiktok";
+        }
     };
 }
-namespace
+namespace telegram
 {
     class Telegram
     {
         std::map<std::string, std::string> _configMap;
+
+        inline bool supportsKey(std::string &key) const
+        {
+            return key == "telegram";
+        }
     };
 }
 
@@ -60,7 +80,8 @@ namespace tester
         };
 
         // void printNestedMap(const std::string &prefix);
-        void displayInfo();
+        void
+        displayInfo();
         void displayMap(std::map<std::string, std::string> &configMap);
 
         void processTargetKeys(const Json::Value &configValue, const std::string &key) override;
