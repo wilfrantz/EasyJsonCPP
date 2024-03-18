@@ -34,8 +34,8 @@ int main()
     Tiktok tiktokObj;
     Telegram telegramObj;
 
+    const std::vector<std::any> container{tiktokObj, twitterObj, instagramObj, telegramObj};
     const std::vector<std::string> _targets = {"twitter", "tiktok", "instagram", "telegram"};
-    std::vector<std::any> container{tiktokObj, twitterObj, instagramObj};
 
     EasyJsonCPP loader("easy_config.json", _targets, container);
     loader.loadConfig();

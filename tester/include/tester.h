@@ -15,13 +15,15 @@
 
 #include <easyjson.h>
 
+// Interface for classes that support the key
 namespace twitter
 {
-    class Twitter
+    class Twitter : public keysupport::KeySupport
     {
         std::map<std::string, std::string> _configMap;
 
-        inline bool supportsKey(std::string &key) const
+        // virtual bool supportsKey(const std::string &key) const = 0;
+        bool supportsKey(const std::string &key) const override
         {
             return key == "twitter";
         }
@@ -29,11 +31,11 @@ namespace twitter
 }
 namespace instagram
 {
-    class Instagram
+    class Instagram : public keysupport::KeySupport
     {
         std::map<std::string, std::string> _configMap;
 
-        inline bool supportsKey(std::string &key) const
+        bool supportsKey(const std::string &key) const override
         {
             return key == "instagram";
         }
@@ -41,11 +43,11 @@ namespace instagram
 }
 namespace tiktok
 {
-    class Tiktok
+    class Tiktok : public keysupport::KeySupport
     {
         std::map<std::string, std::string> _configMap;
 
-        inline bool supportsKey(std::string &key) const
+        bool supportsKey(const std::string &key) const override
         {
             return key == "tiktok";
         }
@@ -53,11 +55,11 @@ namespace tiktok
 }
 namespace telegram
 {
-    class Telegram
+    class Telegram : public keysupport::KeySupport
     {
         std::map<std::string, std::string> _configMap;
 
-        inline bool supportsKey(std::string &key) const
+        bool supportsKey(const std::string &key) const
         {
             return key == "telegram";
         }

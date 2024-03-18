@@ -210,16 +210,29 @@ namespace easyjson
     void EasyJsonCPP::processTargetKeys(const Json::Value &configValue,
                                         const std::string &key)
     {
+        using namespace keysupport;
+
         _logger->debug("Processing target key: {}", key);
         if (configValue.isObject())
         {
-            // Process array value
+            // Process object value
             for (const auto &element : configValue.getMemberNames())
             {
                 for (auto &object : _container)
                 {
-                    // if (object->supportsKey(element))
-                    //     loadConfigMap(key, configValue[element], *object);
+                    try // this issue is in the logic here.
+                    {
+                        const auto &supportInterface = std::any_cast<const KeySupport &>(object);
+                        if (supportInterface.supportsKey(element))
+                        {
+                            // loadConfigMap(key, configValue[element], *object);
+                            _logger->info("{} is supported by object.", element);
+                        }
+                    }
+                    catch (const std::bad_any_cast &)
+                    {
+                        _logger->error("Error: {} Object does not support KeySupport interface.", key);
+                    }
                 }
             }
         }
