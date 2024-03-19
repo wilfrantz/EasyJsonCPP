@@ -184,8 +184,6 @@ namespace easyjson
     void EasyJsonCPP::processConfigValue(const std::string &sectionName,
                                          const Json::Value &sectionValue)
     {
-        _logger->debug("Processing data in config file.");
-
         if (sectionValue.isString())
         {
             // Insert the string value into configMap
@@ -212,34 +210,36 @@ namespace easyjson
     {
         using namespace keysupport;
 
-        _logger->debug("Processing target key: {}", key);
-        if (configValue.isObject())
+        _logger->info("Processing target key: {}, container size: {}", key, _container.size());
+
+        for (const auto &object : _container)
         {
-            // Process object value
-            for (const auto &element : configValue.getMemberNames())
+            try
             {
-                for (auto &object : _container)
-                {
-                    try // this issue is in the logic here.
-                    {
-                        const auto &supportInterface = std::any_cast<const KeySupport &>(object);
-                        if (supportInterface.supportsKey(element))
-                        {
-                            // loadConfigMap(key, configValue[element], *object);
-                            _logger->info("{} is supported by object.", element);
-                        }
-                    }
-                    catch (const std::bad_any_cast &)
-                    {
-                        _logger->error("Error: {} Object does not support KeySupport interface.", key);
-                    }
-                }
+                const auto &supportInterface = std::any_cast<const KeySupport &>(object);
+                // if (supportInterface.supportsKey(key))
+                // {
+                //     // Process the key here
+                //     if (configValue.isObject())
+                //     {
+                //         for (const auto &element : configValue.getMemberNames())
+                //         {
+                //             loadConfigMap(key, configValue[element], *object);
+                //         }
+                //     }
+                //     else
+                //     {
+                //         // Invalid value type
+                //         throw std::runtime_error("Unknown Key");
+                //     }
+                // }
             }
-        }
-        else
-        {
-            // Invalid value type
-            throw std::runtime_error("Unknown Key");
+            catch (const std::bad_any_cast &)
+            {
+                // Log an error if the object does not support KeySupport interface
+                _logger->error("Error: {} Object does not support KeySupport interface.", key);
+                break;
+            }
         }
     }
 
@@ -260,7 +260,7 @@ namespace easyjson
             _logger->error("Error retrieving key: {} from config file.", key);
             static const std::string errorString = "Error retrieving " + key + " from config file";
             return errorString;
-            exit(1);
+            throw std::runtime_error(errorString);
         }
         return errorString;
     }
@@ -299,7 +299,6 @@ namespace easyjson
         }
 
         spdlog::set_level(log_level);
-        spdlog::stdout_color_mt("sipeto");
         _logger->debug("Log level set to: {} \n", level);
     }
 
@@ -311,10 +310,10 @@ namespace easyjson
 
         const std::map<std::string, std::string> infoDataMap = readInfoData();
 
-        _logger->info("{} {}", getFromConfigMap("project", infoDataMap),
-                      getFromConfigMap("version", infoDataMap));
+        _logger->info("{} {}", getFromConfigMap("project", infoDataMap), getFromConfigMap("version", infoDataMap));
         _logger->info(getFromConfigMap("description", infoDataMap));
         _logger->info("Author: {}", getFromConfigMap("author", infoDataMap));
+        setLogLevel(getFromConfigMap("mode", infoDataMap));
 
 // Get the jsoncpp version, if available
 #ifdef JSONCPP_VERSION_STRING

@@ -35,7 +35,7 @@ namespace keysupport
     class KeySupport
     {
     public:
-        virtual bool supportsKey(const std::string &key) const = 0;
+        virtual bool supportsKey(const std::string& key) const = 0;
     };
 }
 namespace easyjson

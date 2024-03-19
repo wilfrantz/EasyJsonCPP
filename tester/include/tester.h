@@ -61,7 +61,9 @@ namespace telegram
 
         bool supportsKey(const std::string &key) const
         {
-            return key == "telegram";
+        std:;
+            std::cout << "Checking telegram object." << std::endl;
+            return key == "telegram" || key == "Telegram";
         }
     };
 }
