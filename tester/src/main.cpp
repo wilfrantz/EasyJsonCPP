@@ -59,5 +59,9 @@ int main()
     test.displayInfo();
     test.displayMap(test._configMapRef);
 
+    // Actual Testing
+    Twitter twitter;
+    test.displayMap(twitter._configMap);
+
     return EXIT_SUCCESS;
 }

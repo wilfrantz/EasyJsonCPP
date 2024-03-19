@@ -36,6 +36,7 @@ namespace keysupport
     {
     public:
         virtual ~KeySupport() {}
+        std::map<std::string, std::string> _configMap;
         virtual bool supportsKey(const std::string& key) const = 0;
     };
 }
@@ -92,11 +93,13 @@ namespace easyjson
                                                            std::string> &configMap = _configMap);
 
         template <typename T>
-        inline void loadConfigMap(const std::string &key,
+        void loadConfigMap(const std::string &key,
                                   const std::string &value,
-                                  const T &object)
+                                  T &object)
         {
-            object._configMap[key] = value;
+            _logger->info("Loading the {} map", key);
+            /// NOTE: Dereference the std::unique_ptr to access the KeySupport object
+            (*object)._configMap[key] = value;
         }
 
         // const std::vector<std::any> _container;

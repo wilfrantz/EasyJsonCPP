@@ -20,6 +20,7 @@ namespace twitter
 {
     class Twitter : public keysupport::KeySupport
     {
+    public:
         std::map<std::string, std::string> _configMap;
 
         bool supportsKey(const std::string &key) const override
@@ -32,6 +33,7 @@ namespace instagram
 {
     class Instagram : public keysupport::KeySupport
     {
+    public:
         std::map<std::string, std::string> _configMap;
 
         bool supportsKey(const std::string &key) const override
@@ -44,6 +46,7 @@ namespace tiktok
 {
     class Tiktok : public keysupport::KeySupport
     {
+    public:
         std::map<std::string, std::string> _configMap;
 
         bool supportsKey(const std::string &key) const override
@@ -56,6 +59,7 @@ namespace telegram
 {
     class Telegram : public keysupport::KeySupport
     {
+    public:
         std::map<std::string, std::string> _configMap;
 
         bool supportsKey(const std::string &key) const

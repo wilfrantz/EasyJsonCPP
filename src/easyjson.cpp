@@ -210,29 +210,26 @@ namespace easyjson
     {
         _logger->debug("Processing target key: {}", key);
 
-        for (const auto &object : _container)
+        for (auto &object : _container)
         {
             try
             {
                 if (object->supportsKey(key))
                     _logger->debug("{} is supported", key);
-                // const auto &supportInterface = std::any_cast<const keysupport::KeySupport &>(object);
-                // if (supportInterface.supportsKey(key))
-                // {
-                //     // Process the key here
-                //     if (configValue.isObject())
-                //     {
-                //         for (const auto &element : configValue.getMemberNames())
-                //         {
-                //             loadConfigMap(key, configValue[element], *object);
-                //         }
-                //     }
-                //     else
-                //     {
-                //         // Invalid value type
-                //         throw std::runtime_error("Unknown Key");
-                //     }
-                // }
+                // Process the key here
+                if (configValue.isObject())
+                {
+                    for (const auto &element : configValue.getMemberNames())
+                    {
+                        const std::string &value = element;
+                        loadConfigMap(key, value, object);
+                    }
+                }
+                else
+                {
+                    // Invalid value type
+                    throw std::runtime_error("Unknown Key");
+                }
             }
             catch (const std::bad_any_cast &)
             {

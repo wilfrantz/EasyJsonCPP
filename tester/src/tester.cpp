@@ -14,7 +14,7 @@ namespace tester
                 _logger->debug("Processing target key: {}", key);
                 if (configValue.isArray())
                 {
-                        // implementation not needed for this tester.
+                        /// NOTE: implementation in the tester.
                 }
                 else
                 {
