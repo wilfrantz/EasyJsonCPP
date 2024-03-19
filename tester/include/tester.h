@@ -22,7 +22,6 @@ namespace twitter
     {
         std::map<std::string, std::string> _configMap;
 
-        // virtual bool supportsKey(const std::string &key) const = 0;
         bool supportsKey(const std::string &key) const override
         {
             return key == "twitter";
@@ -62,7 +61,6 @@ namespace telegram
         bool supportsKey(const std::string &key) const
         {
         std:;
-            std::cout << "Checking telegram object." << std::endl;
             return key == "telegram" || key == "Telegram";
         }
     };

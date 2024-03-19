@@ -31,10 +31,10 @@ using namespace keysupport;
 int main()
 {
     // Objects to move
-    std::unique_ptr<KeySupport> tiktokObjPtr = std::make_unique<KeySupport>();
-    std::unique_ptr<KeySupport> twitterObjPtr = std::make_unique<KeySupport>();
-    std::unique_ptr<KeySupport> instagramObjPtr = std::make_unique<KeySupport>();
-    std::unique_ptr<KeySupport> telegramObjPtr = std::make_unique<KeySupport>();
+    std::unique_ptr<KeySupport> twitterObjPtr = std::make_unique<Twitter>();
+    std::unique_ptr<KeySupport> tiktokObjPtr = std::make_unique<Tiktok>();
+    std::unique_ptr<KeySupport> instagramObjPtr = std::make_unique<Instagram>();
+    std::unique_ptr<KeySupport> telegramObjPtr = std::make_unique<Telegram>();
 
     // Move objects into the vector
     std::vector<std::unique_ptr<KeySupport>> container;
@@ -43,14 +43,15 @@ int main()
     container.push_back(std::move(instagramObjPtr));
     container.push_back(std::move(telegramObjPtr));
 
-    // Targets
-    const std::vector<std::string> _targets = {"twitter", "tiktok", "instagram", "telegram"};
+    // Targets list
+    const std::vector<std::string> _targets = {"twitter", "tiktok",
+                                               "instagram", "telegram"};
 
     // Create EasyJsonCPP object
-    EasyJsonCPP loader("easy_config.json", _targets, container);
+    EasyJsonCPP loader("easy_config.json", _targets, std::move(container));
     loader.loadConfig();
 
-    // Set the level.
+    // Set the level of the tester class.
     loader.setLogLevel(loader.getFromConfigMap("mode"));
 
     // Display information using Tester class

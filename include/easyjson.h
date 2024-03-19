@@ -48,8 +48,8 @@ namespace easyjson
 
         explicit EasyJsonCPP(const std::string &configFile,
                              const std::vector<std::string> &targets,
-                             const std::vector<std::unique_ptr<keysupport::KeySupport>> &container)
-            : _configFile(configFile), _targetKeys(targets), _container(container)
+                             std::vector<std::unique_ptr<keysupport::KeySupport>> &&container)
+            : _configFile(configFile), _targetKeys(targets), _container(std::move(container))
         {
             _logger = spdlog::get("EasyJson");
             if (!_logger)
