@@ -26,22 +26,34 @@ using namespace twitter;
 using namespace easyjson;
 using namespace telegram;
 using namespace instagram;
+using namespace keysupport;
 
 int main()
 {
-    Twitter twitterObj;
-    Instagram instagramObj;
-    Tiktok tiktokObj;
-    Telegram telegramObj;
+    // Objects to move
+    std::unique_ptr<KeySupport> tiktokObjPtr = std::make_unique<KeySupport>();
+    std::unique_ptr<KeySupport> twitterObjPtr = std::make_unique<KeySupport>();
+    std::unique_ptr<KeySupport> instagramObjPtr = std::make_unique<KeySupport>();
+    std::unique_ptr<KeySupport> telegramObjPtr = std::make_unique<KeySupport>();
 
-    const std::vector<std::any> container{tiktokObj, twitterObj, instagramObj, telegramObj};
+    // Move objects into the vector
+    std::vector<std::unique_ptr<KeySupport>> container;
+    container.push_back(std::move(tiktokObjPtr));
+    container.push_back(std::move(twitterObjPtr));
+    container.push_back(std::move(instagramObjPtr));
+    container.push_back(std::move(telegramObjPtr));
+
+    // Targets
     const std::vector<std::string> _targets = {"twitter", "tiktok", "instagram", "telegram"};
 
+    // Create EasyJsonCPP object
     EasyJsonCPP loader("easy_config.json", _targets, container);
     loader.loadConfig();
 
+    // Set the level.
     loader.setLogLevel(loader.getFromConfigMap("mode"));
 
+    // Display information using Tester class
     Tester test;
     test.displayInfo();
     test.displayMap(test._configMapRef);

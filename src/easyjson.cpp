@@ -208,15 +208,15 @@ namespace easyjson
     void EasyJsonCPP::processTargetKeys(const Json::Value &configValue,
                                         const std::string &key)
     {
-        using namespace keysupport;
-
         _logger->info("Processing target key: {}, container size: {}", key, _container.size());
 
         for (const auto &object : _container)
         {
             try
             {
-                const auto &supportInterface = std::any_cast<const KeySupport &>(object);
+                if (object->supportsKey(key))
+                    _logger->info("{} is supported", key);
+                // const auto &supportInterface = std::any_cast<const keysupport::KeySupport &>(object);
                 // if (supportInterface.supportsKey(key))
                 // {
                 //     // Process the key here

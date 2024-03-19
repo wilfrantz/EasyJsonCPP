@@ -35,6 +35,7 @@ namespace keysupport
     class KeySupport
     {
     public:
+        virtual ~KeySupport() {}
         virtual bool supportsKey(const std::string& key) const = 0;
     };
 }
@@ -47,7 +48,7 @@ namespace easyjson
 
         explicit EasyJsonCPP(const std::string &configFile,
                              const std::vector<std::string> &targets,
-                             const std::vector<std::any> &container)
+                             const std::vector<std::unique_ptr<keysupport::KeySupport>> &container)
             : _configFile(configFile), _targetKeys(targets), _container(container)
         {
             _logger = spdlog::get("EasyJson");
@@ -98,7 +99,8 @@ namespace easyjson
             object._configMap[key] = value;
         }
 
-        const std::vector<std::any> _container;
+        // const std::vector<std::any> _container;
+        const std::vector<std::unique_ptr<keysupport::KeySupport>> _container;
 
         ~EasyJsonCPP() = default;
 
