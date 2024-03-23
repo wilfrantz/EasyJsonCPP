@@ -37,7 +37,7 @@ namespace keysupport
     public:
         virtual ~KeySupport() {}
         std::map<std::string, std::string> _configMap;
-        virtual bool supportsKey(const std::string& key) const = 0;
+        virtual bool supportsKey(const std::string &key) const = 0;
     };
 }
 namespace easyjson
@@ -62,11 +62,9 @@ namespace easyjson
             displayInfo();
         }
 
-        // void loadConfig(std::vector<std::string> targetKeys);
         void loadConfig();
         void displayInfo();
 
-        // std::map<std::string, std::map<std::string, std::string>> _configMap;
         static std::map<std::string, std::string> _configMap;
 
         void setLogLevel(const std::string &level);
@@ -94,25 +92,35 @@ namespace easyjson
 
         template <typename T>
         void loadConfigMap(const std::string &key,
-                                  const std::string &value,
-                                  T &object)
+                           const std::string &value,
+                           T &object)
         {
-            _logger->info("Loading the {} map", key);
-            /// NOTE: Dereference the std::unique_ptr to access the KeySupport object
+            // _logger->info("Loading the {} map", key);
+            /// NOTE: Dereference the std::unique_ptr to access the KeySupport (interface) object
             (*object)._configMap[key] = value;
+
+            if ((*object)._configMap.empty())
+                _logger->debug("Map is empty.");
+            else
+                _logger->debug("Map is not empty");
         }
 
-        // const std::vector<std::any> _container;
         const std::vector<std::unique_ptr<keysupport::KeySupport>> _container;
 
         ~EasyJsonCPP() = default;
 
+#ifdef UNIT_TEST
+        friend class EasyJsonMock;
+#endif
     private:
         std::string _configFile;
         const std::string VERSION = "0.0.1";
         static std::shared_ptr<spdlog::logger> _logger;
         std::vector<std::string> _targetKeys{};
 
+        // This function recursively calculates the hash value of a null-terminated string
+        // using a simple algorithm: multiplying the current hash value by 31 and adding
+        // the ASCII value of the current character.
         static constexpr std::size_t hash(const char *s, std::size_t h = 0)
         {
             return (*s == '\0') ? h : hash(s + 1, (h * 31) + static_cast<unsigned char>(*s));
