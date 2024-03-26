@@ -131,7 +131,7 @@ namespace easyjson
         friend class EasyJsonMock;
 #endif
     private:
-        std::string _configFile;
+        std::string _configFile{};
         const std::string VERSION = "0.0.1";
         static std::shared_ptr<spdlog::logger> _logger;
         std::vector<std::string> _targetKeys{};

@@ -16,6 +16,11 @@ namespace easyjson
         EasyJsonMock() : easyjson(new EasyJsonCPP()) {}
         ~EasyJsonMock() { delete easyjson; }
 
+        void loadConfigMock()
+        {
+            easyjson->loadConfig();
+        }
+
         void parseConfigMock(const Json::Value &root)
         {
             easyjson->parseConfig(root);
@@ -47,6 +52,7 @@ namespace easyjson
         }
 
         // Mock methods
+        MOCK_METHOD(void, loadConfig, ());
         MOCK_METHOD(void, parseConfig, (const Json::Value &root));
         MOCK_METHOD(bool, isTargetKey, (const std::string &key), (const));
         MOCK_METHOD(void, validateConfigRoot, (const Json::Value &root));
@@ -55,6 +61,7 @@ namespace easyjson
         MOCK_METHOD(void, processConfigValue, (const std::string &key, const Json::Value &value));
 
     private:
+    protected:
         EasyJsonCPP *easyjson;
     };
 } // namespace easyjson
