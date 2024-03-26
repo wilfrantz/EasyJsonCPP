@@ -65,7 +65,7 @@ namespace telegram
         bool supportsKey(const std::string &key) const
         {
         std:;
-            return key == "telegram" || key == "Telegram";
+            return key == "telegram";
         }
     };
 }
@@ -86,11 +86,10 @@ namespace tester
         };
 
         // void printNestedMap(const std::string &prefix);
-        void
-        displayInfo();
+        void displayInfo();
         void displayMap(std::map<std::string, std::string> &configMap);
 
-        void processTargetKeys(const Json::Value &configValue, const std::string &key) override;
+        void processTargetKeys(const Json::Value &configValue, const std::string &key) ;
 
         std::map<std::string, std::string> &_configMapRef = EasyJsonCPP::_configMap;
 

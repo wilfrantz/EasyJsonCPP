@@ -54,14 +54,10 @@ int main()
     // Set the level of the tester class.
     loader.setLogLevel(loader.getFromConfigMap("mode"));
 
-    // Display information using Tester class
     Tester test;
-    test.displayInfo();
-    test.displayMap(test._configMapRef);
+    Tiktok tik;
+    test.displayMap(tik._configMap);
 
-    // Actual Testing
-    Twitter twitter;
-    test.displayMap(twitter._configMap);
 
     return EXIT_SUCCESS;
 }

@@ -22,6 +22,7 @@ namespace easyjson
             _logger->error(error_msg);
             throw std::runtime_error(error_msg);
         }
+
         try
         {
             _logger->debug("Loading configuration file: {}", this->_configFile);
@@ -60,7 +61,7 @@ namespace easyjson
      */
     void EasyJsonCPP::validateConfigRoot(const Json::Value &root)
     {
-        _logger->debug("Validating configuration file.");
+        _logger->debug("Validating configuration file: {}.", this->_configFile);
         if (!root.isArray())
         {
             throw std::runtime_error("Config file is not an array of Json object.");
@@ -81,7 +82,7 @@ namespace easyjson
      */
     void EasyJsonCPP::parseConfig(const Json::Value &root)
     {
-        _logger->debug("Parsing configuration file.");
+        _logger->debug("Parsing configuration file: {}.", this->_configFile);
 
         for (const auto &object : root)
         {
@@ -90,21 +91,21 @@ namespace easyjson
                 throw std::runtime_error("Invalid format for object in configuration file.");
             }
 
-            for (const auto &key : object.getMemberNames())
+            for (const auto &member : object.getMemberNames())
             {
-                const auto &value = object[key];
+                const auto &value = object[member];
 
-                if (isTargetKey(key))
+                if (isTargetKey(member))
                 {
-                    processTargetKeys(value, key);
+                    this->processTargetKeys(value, member);
                 }
                 else if (value.isArray())
                 {
-                    parseArrayConfig(value);
+                    this->parseArrayConfig(value);
                 }
                 else if (value.isObject())
                 {
-                    parseObjectConfig(value);
+                    this->parseObjectConfig(value);
                 }
                 else
                 {
@@ -205,24 +206,31 @@ namespace easyjson
     /// @param configValue[in] The value of the target key
     /// @param key[in] The name of the target key
     /// @return none.
+    // template <typename T>
     void EasyJsonCPP::processTargetKeys(const Json::Value &configValue,
                                         const std::string &key)
     {
         _logger->debug("Processing target key: {}", key);
 
-        for (auto &object : _container)
+        for (auto &object : this->_container)
         {
             try
             {
-                if (object->supportsKey(key))
-                    _logger->debug("{} is supported", key);
+                if (!object->supportsKey(key))
+                {
+                    _logger->error("{} is not supported", key);
+                    break;
+                }
+
                 // Process the key here
                 if (configValue.isObject())
                 {
-                    for (const auto &element : configValue.getMemberNames())
+                    for (const auto &member : configValue.getMemberNames())
                     {
-                        const std::string &value = element;
-                        loadConfigMap(key, value, object);
+                        const std::string &element = member;
+                        const std::string &value = configValue[member].asString();
+                        _logger->debug("Loading the {} map with: {}", key, element);
+                        this->loadConfigMap(element, value, object);
                     }
                 }
                 else
@@ -233,7 +241,7 @@ namespace easyjson
             }
             catch (const std::bad_any_cast &)
             {
-                // Log an error if the object does not support KeySupport interface
+                // Log an error if the object is not supported by the interface
                 _logger->error("Error: {} Object does not support KeySupport interface.", key);
                 break;
             }

@@ -37,6 +37,29 @@ namespace keysupport
     public:
         virtual ~KeySupport() {}
         std::map<std::string, std::string> _configMap;
+
+
+        void displayMap(std::map<std::string, std::string> &configMap)
+        {
+            if (!configMap.empty())
+            {
+
+                // _logger->debug("Printing the map to stdout.");
+                std::cout << "Printing the map to stdout." << std::endl;
+
+                for (const auto &element : configMap)
+                {
+                    // _logger->debug(element.first + " : " + element.second);
+                    std::cout << element.first << " : " << element.second << std::endl;
+                }
+            }
+            else
+            {
+                std::cerr << "Map is empty" << std::endl;
+                // _logger->error("Map is empty.");
+                exit(EXIT_FAILURE);
+            }
+        }
         virtual bool supportsKey(const std::string &key) const = 0;
     };
 }
@@ -79,30 +102,25 @@ namespace easyjson
         void parseObjectConfig(const Json::Value &objectValue);
         void processConfigValue(const std::string &key, const Json::Value &value);
 
-        virtual void processTargetKeys(const Json::Value &configValue,
-                                       const std::string &key);
+        // void processTargetKeys(const Json::Value &configValue,
+        //                                const std::string &key);
 
-        template <typename T>
+        // template <typename T>
         void processTargetKeys(const Json::Value &configValue,
-                               const std::string &key, const T &object);
+                               const std::string &key);
 
         const std::string &getFromConfigMap(const std::string &key,
                                             const std::map<std::string,
                                                            std::string> &configMap = _configMap);
 
         template <typename T>
-        void loadConfigMap(const std::string &key,
+        void loadConfigMap(const std::string &element,
                            const std::string &value,
                            T &object)
         {
-            // _logger->info("Loading the {} map", key);
-            /// NOTE: Dereference the std::unique_ptr to access the KeySupport (interface) object
-            (*object)._configMap[key] = value;
+            /// NOTE: Dereference the std::unique_ptr to access the interface object
+            (*object)._configMap[element] = value;
 
-            if ((*object)._configMap.empty())
-                _logger->debug("Map is empty.");
-            else
-                _logger->debug("Map is not empty");
         }
 
         const std::vector<std::unique_ptr<keysupport::KeySupport>> _container;
