@@ -30,34 +30,14 @@ using namespace keysupport;
 
 int main()
 {
-    // Objects to move
-    std::unique_ptr<KeySupport> twitterObjPtr = std::make_unique<Twitter>();
-    std::unique_ptr<KeySupport> tiktokObjPtr = std::make_unique<Tiktok>();
-    std::unique_ptr<KeySupport> instagramObjPtr = std::make_unique<Instagram>();
-    std::unique_ptr<KeySupport> telegramObjPtr = std::make_unique<Telegram>();
-
-    // Move objects into the vector
-    std::vector<std::unique_ptr<KeySupport>> container;
-    container.push_back(std::move(tiktokObjPtr));
-    container.push_back(std::move(twitterObjPtr));
-    container.push_back(std::move(instagramObjPtr));
-    container.push_back(std::move(telegramObjPtr));
-
-    // Targets list
-    const std::vector<std::string> _targets = {"twitter", "tiktok",
-                                               "instagram", "telegram"};
-
-    // Create EasyJsonCPP object
-    EasyJsonCPP loader("easy_config.json", _targets, std::move(container));
-    loader.loadConfig();
-
-    // Set the level of the tester class.
-    loader.setLogLevel(loader.getFromConfigMap("mode"));
-
+    EasyJsonCPP loader("easy_config.json");
     Tester test;
-    Tiktok tik;
-    test.displayMap(tik._configMap);
 
+    test._mainMap = loader.loadConfiguration();
+    test.displayMap(test._mainMap);
+
+
+    // TODO: Set the level of the tester class.
 
     return EXIT_SUCCESS;
 }

@@ -70,24 +70,12 @@ namespace easyjson
     public:
         EasyJsonCPP() = default;
 
-        explicit EasyJsonCPP(const std::string &configFile,
-                             const std::vector<std::string> &targets,
-                             std::vector<std::unique_ptr<keysupport::KeySupport>> &&container)
-            : _configFile(configFile), _targetKeys(targets), _container(std::move(container))
-        {
-            _logger = spdlog::get("EasyJson");
-            if (!_logger)
-            {
-                _logger = spdlog::stdout_color_mt("EasyJson");
-            }
+        explicit EasyJsonCPP(const std::string &configFile);
 
-            // display library information
-            displayInfo();
-        }
-
-        void loadConfig();
+        std::map<std::string, std::map<std::string, std::string>> loadConfiguration();
         void displayInfo();
 
+        std::map<std::string, std::map<std::string, std::string>> _mainMap;
         static std::map<std::string, std::string> _configMap;
 
         void setLogLevel(const std::string &level);
@@ -97,10 +85,12 @@ namespace easyjson
         // Methods to parse the config Json file.
         void parseConfig(const Json::Value &root);
         bool isTargetKey(const std::string &key) const;
-        void validateConfigRoot(const Json::Value &root);
-        void parseArrayConfig(const Json::Value &arrayValue);
-        void parseObjectConfig(const Json::Value &objectValue);
-        void processConfigValue(const std::string &key, const Json::Value &value);
+        void validateRoot(const Json::Value &root);
+        void parseArrayConfig(const std::string member, const Json::Value &arrayValue);
+        // void parseObjectConfig(const Json::Value &objectValue);
+        void parseObjectConfig(const std::string &member, const Json::Value &objectValue);
+        // void processConfigValue(const std::string &key, const Json::Value &value);
+        void processConfigValue(const std::string &member, const std::string &key, const Json::Value &value);
 
         // void processTargetKeys(const Json::Value &configValue,
         //                                const std::string &key);
@@ -132,7 +122,6 @@ namespace easyjson
 #endif
     private:
         std::string _configFile{};
-        const std::string VERSION = "0.0.1";
         static std::shared_ptr<spdlog::logger> _logger;
         std::vector<std::string> _targetKeys{};
 

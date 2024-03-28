@@ -3,7 +3,7 @@
 
 namespace tester
 {
-        static std::shared_ptr<spdlog::logger> _logger = spdlog::stdout_color_mt("Tester");
+        std::shared_ptr<spdlog::logger> Tester::_logger = spdlog::stdout_color_mt("Tester");
 
         /// @brief Process the target keys in the config file
         /// @param configValue[in] The value of the target key
@@ -42,6 +42,23 @@ namespace tester
                 {
                         _logger->error("Map is empty.");
                         exit(EXIT_FAILURE);
+                }
+        }
+
+        void Tester::displayMap(const std::map<std::string, std::map<std::string, std::string>> &configMap)
+        {
+                if (configMap.empty())
+                {
+                        _logger->error("NestedMap is empty.");
+                        exit(EXIT_FAILURE);
+                }
+
+                for (const auto &outPair : configMap)
+                {
+                        for (const auto &innerPair : outPair.second)
+                        {
+                                _logger->debug(innerPair.first + " : " + innerPair.second);
+                        }
                 }
         }
 

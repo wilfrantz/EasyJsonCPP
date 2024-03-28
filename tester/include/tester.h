@@ -88,13 +88,17 @@ namespace tester
         // void printNestedMap(const std::string &prefix);
         void displayInfo();
         void displayMap(std::map<std::string, std::string> &configMap);
+        void displayMap(const std::map<std::string, std::map<std::string, std::string>> &configMap);
 
-        void processTargetKeys(const Json::Value &configValue, const std::string &key) ;
+        void processTargetKeys(const Json::Value &configValue, const std::string &key);
 
+        /// NOTE: Not sure I need this map
         std::map<std::string, std::string> &_configMapRef = EasyJsonCPP::_configMap;
 
+        std::map<std::string, std::map<std::string, std::string>> _mainMap;
+
+        static std::shared_ptr<spdlog::logger> _logger;
     private:
-        std::shared_ptr<spdlog::logger> _logger;
     };
 }
 

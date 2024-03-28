@@ -3,7 +3,7 @@
     "mode": "debug",
     "project": "EasyJson",
     "version": "(v0.0.1)",
-    "description": "Simplify JSON configuration file integration",
+    "description": "Simplify JSON configuration integration",
     "filename": "metadata.json",
     "author": "(C) 2023 Wilfrantz Dede"
   }
