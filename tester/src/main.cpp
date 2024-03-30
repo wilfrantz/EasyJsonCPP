@@ -34,9 +34,18 @@ int main()
     Tester test;
 
     test._mainMap = loader.loadConfiguration();
-    test.displayMap(test._mainMap);
 
+    Twitter tweet(test._mainMap["twitter"]);
+    test.displayMap(tweet._configMap);
 
+    Tiktok tiktok(test._mainMap["tiktok"]);
+    test.displayMap(tiktok._configMap);
+
+    Instagram gram(test._mainMap["instagram"]);
+    test.displayMap(gram._configMap);
+
+    Telegram telegram(test._mainMap["telegram"]);
+    test.displayMap(telegram._configMap);
     // TODO: Set the level of the tester class.
 
     return EXIT_SUCCESS;

@@ -21,6 +21,8 @@ namespace twitter
     class Twitter : public keysupport::KeySupport
     {
     public:
+        Twitter(std::map<std::string, std::string> map) : _configMap(map) {}
+
         std::map<std::string, std::string> _configMap;
 
         bool supportsKey(const std::string &key) const override
@@ -34,6 +36,7 @@ namespace instagram
     class Instagram : public keysupport::KeySupport
     {
     public:
+        Instagram(const std::map<std::string, std::string> &map) : _configMap(map) {}
         std::map<std::string, std::string> _configMap;
 
         bool supportsKey(const std::string &key) const override
@@ -47,6 +50,7 @@ namespace tiktok
     class Tiktok : public keysupport::KeySupport
     {
     public:
+        Tiktok(const std::map<std::string, std::string> &map) : _configMap(map) {}
         std::map<std::string, std::string> _configMap;
 
         bool supportsKey(const std::string &key) const override
@@ -60,6 +64,7 @@ namespace telegram
     class Telegram : public keysupport::KeySupport
     {
     public:
+        Telegram(std::map<std::string, std::string> map) : _configMap(map) {}
         std::map<std::string, std::string> _configMap;
 
         bool supportsKey(const std::string &key) const
@@ -85,19 +90,17 @@ namespace tester
             }
         };
 
-        // void printNestedMap(const std::string &prefix);
         void displayInfo();
-        void displayMap(std::map<std::string, std::string> &configMap);
+
+        void displayMap(const std::map<std::string, std::string> &configMap);
         void displayMap(const std::map<std::string, std::map<std::string, std::string>> &configMap);
 
         void processTargetKeys(const Json::Value &configValue, const std::string &key);
 
-        /// NOTE: Not sure I need this map
-        std::map<std::string, std::string> &_configMapRef = EasyJsonCPP::_configMap;
-
         std::map<std::string, std::map<std::string, std::string>> _mainMap;
 
         static std::shared_ptr<spdlog::logger> _logger;
+
     private:
     };
 }

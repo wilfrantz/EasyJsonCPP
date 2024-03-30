@@ -204,8 +204,6 @@ namespace easyjson
                                          const std::string &sectionName,
                                          const Json::Value &sectionValue)
     {
-        _logger->debug("Processing: {}", sectionName);
-
         if (sectionValue.isString() || sectionValue.isInt())
         {
             _mainMap[member][sectionName] = sectionValue.asString();

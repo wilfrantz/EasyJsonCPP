@@ -41,24 +41,7 @@ namespace keysupport
 
         void displayMap(std::map<std::string, std::string> &configMap)
         {
-            if (!configMap.empty())
-            {
 
-                // _logger->debug("Printing the map to stdout.");
-                std::cout << "Printing the map to stdout." << std::endl;
-
-                for (const auto &element : configMap)
-                {
-                    // _logger->debug(element.first + " : " + element.second);
-                    std::cout << element.first << " : " << element.second << std::endl;
-                }
-            }
-            else
-            {
-                std::cerr << "Map is empty" << std::endl;
-                // _logger->error("Map is empty.");
-                exit(EXIT_FAILURE);
-            }
         }
         virtual bool supportsKey(const std::string &key) const = 0;
     };
