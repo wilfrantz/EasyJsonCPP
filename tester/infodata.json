@@ -1,9 +1,9 @@
 {
   "info": {
-    "mode": "debug",
+    "mode": "info",
     "project": "EasyJson",
     "version": "(v0.0.1)",
-    "description": "Simplify JSON configuration integration",
+    "description": "Simplify configuration data integration",
     "filename": "metadata.json",
     "author": "(C) 2023 Wilfrantz Dede"
   }

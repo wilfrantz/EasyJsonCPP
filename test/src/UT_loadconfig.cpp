@@ -5,8 +5,7 @@
 
 using namespace easyjson;
 
-// Unit test for loadConfig() method
-TEST(EasyJsonCPPTest, LoadConfig_ThrowsException_WhenConfigFileIsEmpty)
+TEST()
 {
 
 }

@@ -18,60 +18,39 @@
 // Interface for classes that support the key
 namespace twitter
 {
-    class Twitter : public keysupport::KeySupport
+    class Twitter
     {
     public:
-        Twitter(std::map<std::string, std::string> map) : _configMap(map) {}
+        Twitter(const std::map<std::string, std::string> &map) : _configMap(map) {}
 
         std::map<std::string, std::string> _configMap;
-
-        bool supportsKey(const std::string &key) const override
-        {
-            return key == "twitter";
-        }
     };
 }
 namespace instagram
 {
-    class Instagram : public keysupport::KeySupport
+    class Instagram
     {
     public:
         Instagram(const std::map<std::string, std::string> &map) : _configMap(map) {}
         std::map<std::string, std::string> _configMap;
-
-        bool supportsKey(const std::string &key) const override
-        {
-            return key == "instagram";
-        }
     };
 }
 namespace tiktok
 {
-    class Tiktok : public keysupport::KeySupport
+    class Tiktok
     {
     public:
         Tiktok(const std::map<std::string, std::string> &map) : _configMap(map) {}
         std::map<std::string, std::string> _configMap;
-
-        bool supportsKey(const std::string &key) const override
-        {
-            return key == "tiktok";
-        }
     };
 }
 namespace telegram
 {
-    class Telegram : public keysupport::KeySupport
+    class Telegram
     {
     public:
         Telegram(std::map<std::string, std::string> map) : _configMap(map) {}
         std::map<std::string, std::string> _configMap;
-
-        bool supportsKey(const std::string &key) const
-        {
-        std:;
-            return key == "telegram";
-        }
     };
 }
 

@@ -15,7 +15,7 @@ namespace easyjson
         }
 
         // display library information
-        displayInfo();
+        showLibraryInfo();
     }
 
     /**
@@ -52,7 +52,7 @@ namespace easyjson
             file >> root;
 
             // Validate the format of the root object.
-            validateRoot(root);
+            validateRootObject(root);
             return this->_mainMap;
         }
         catch (const std::exception &e)
@@ -72,12 +72,15 @@ namespace easyjson
      * @param root A reference to the Json::Value object representing the root element of the JSON configuration.
      * @throws std::runtime_error If the root element of the JSON configuration is not an array.
      */
-    void EasyJsonCPP::validateRoot(const Json::Value &root)
+    void EasyJsonCPP::validateRootObject(const Json::Value &root)
     {
         _logger->debug("Validating configuration file: {}.", this->_configFile);
         if (root.isArray())
         {
-            parseConfig(root);
+            parseArrayObjectData(root);
+        }
+        else if (root.isObject())
+        {
         } // NOTE: Validate other possible formats of a json file here.
         else
         {
@@ -97,7 +100,7 @@ namespace easyjson
      * @param root A reference to the Json::Value object representing the root element of the JSON configuration.
      * @throws std::runtime_error If any element in the root array is not an object, or if the format of an object's value is invalid.
      */
-    void EasyJsonCPP::parseConfig(const Json::Value &rootObjects)
+    void EasyJsonCPP::parseArrayObjectData(const Json::Value &rootObjects)
     {
         _logger->debug("Parsing configuration file: {}.", this->_configFile);
 
@@ -112,17 +115,13 @@ namespace easyjson
             {
                 const auto &key = object[member];
 
-                if (isTargetKey(member))
+                if (key.isArray())
                 {
-                    this->processTargetKeys(key, member);
-                }
-                else if (key.isArray())
-                {
-                    this->parseArrayConfig(member, key);
+                    this->parseArrayMemberData(member, key);
                 }
                 else if (key.isObject())
                 {
-                    this->parseObjectConfig(member, key);
+                    this->parseObjectMemberData(member, key);
                 }
                 else
                 {
@@ -130,21 +129,6 @@ namespace easyjson
                 }
             }
         }
-    }
-
-    /**
-     * @brief Checks if the provided key is a target key.
-     *
-     * This method determines if a given key is part of the predefined set of target keys. It searches
-     * through the '_targetKeys' container to see if the specified key exists. This is useful for identifying
-     * keys that require special processing or handling within the JSON configuration.
-     *
-     * @param key A string representing the key to be checked against the set of target keys.
-     * @return bool Returns true if the key is a target key, false otherwise.
-     */
-    bool EasyJsonCPP::isTargetKey(const std::string &key) const
-    {
-        return std::find(_targetKeys.begin(), _targetKeys.end(), key) != _targetKeys.end();
     }
 
     /**
@@ -158,7 +142,7 @@ namespace easyjson
      * @param arrayValue A reference to the Json::Value object representing the JSON array to be parsed.
      * @throws std::runtime_error If any element within the array is not a JSON object.
      */
-    void EasyJsonCPP::parseArrayConfig(const std::string member, const Json::Value &arrayValue)
+    void EasyJsonCPP::parseArrayMemberData(const std::string member, const Json::Value &arrayValue)
     {
         for (const auto &object : arrayValue)
         {
@@ -167,7 +151,7 @@ namespace easyjson
                 throw std::runtime_error("Invalid format for object in configuration file.");
             }
 
-            parseObjectConfig(member, object);
+            parseObjectMemberData(member, object);
         }
     }
 
@@ -181,13 +165,13 @@ namespace easyjson
      *
      * @param objectValue A reference to the Json::Value object representing the JSON object to be parsed.
      */
-    void EasyJsonCPP::parseObjectConfig(const std::string &member, const Json::Value &objectValue)
+    void EasyJsonCPP::parseObjectMemberData(const std::string &member, const Json::Value &objectValue)
     {
 
         for (const auto &key : objectValue.getMemberNames())
         {
             const auto &value = objectValue[key];
-            processConfigValue(member, key, value);
+            processMemberData(member, key, value);
         }
     }
 
@@ -200,9 +184,9 @@ namespace easyjson
      * @param value The JSON value associated with the key.
      * @throws std::runtime_error if the JSON value is not a string or an integer.
      */
-    void EasyJsonCPP::processConfigValue(const std::string &member,
-                                         const std::string &sectionName,
-                                         const Json::Value &sectionValue)
+    void EasyJsonCPP::processMemberData(const std::string &member,
+                                        const std::string &sectionName,
+                                        const Json::Value &sectionValue)
     {
         if (sectionValue.isString() || sectionValue.isInt())
         {
@@ -211,52 +195,6 @@ namespace easyjson
         else
         {
             throw std::runtime_error("Invalid format for object value in configuration file.");
-        }
-    }
-
-    /// @brief Process the target keys in the config file
-    /// @param configValue[in] The value of the target key
-    /// @param key[in] The name of the target key
-    /// @return none.
-    // template <typename T>
-    void EasyJsonCPP::processTargetKeys(const Json::Value &configValue,
-                                        const std::string &key)
-    {
-        _logger->debug("Processing target key: {}", key);
-
-        for (auto &object : this->_container)
-        {
-            try
-            {
-                if (!object->supportsKey(key))
-                {
-                    _logger->error("{} is not supported", key);
-                    break;
-                }
-
-                // Process the key here
-                if (configValue.isObject())
-                {
-                    for (const auto &member : configValue.getMemberNames())
-                    {
-                        const std::string &element = member;
-                        const std::string &value = configValue[member].asString();
-                        _logger->debug("Loading the {} map with: {}", key, element);
-                        this->loadConfigMap(element, value, object);
-                    }
-                }
-                else
-                {
-                    // Invalid value type
-                    throw std::runtime_error("Unknown Key");
-                }
-            }
-            catch (const std::bad_any_cast &)
-            {
-                // Log an error if the object is not supported by the interface
-                _logger->error("Error: {} Object does not support KeySupport interface.", key);
-                break;
-            }
         }
     }
 
@@ -316,13 +254,13 @@ namespace easyjson
         }
 
         spdlog::set_level(log_level);
-        _logger->debug("Log level set to: {} \n", level);
+        _logger->info("Log level set to: {} \n", level);
     }
 
     /// @brief  Print a welcome message
     /// @param  none.
     /// @return none.
-    void EasyJsonCPP::displayInfo()
+    void EasyJsonCPP::showLibraryInfo()
     {
 
         const std::map<std::string, std::string> infoDataMap = readInfoData();
@@ -345,7 +283,6 @@ namespace easyjson
 #else
         _logger->warn("Could not determine spdlog version.");
 #endif
-
     }
 
     // Function to read JSON data from infodata file

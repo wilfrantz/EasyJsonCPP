@@ -26,7 +26,6 @@ using namespace twitter;
 using namespace easyjson;
 using namespace telegram;
 using namespace instagram;
-using namespace keysupport;
 
 int main()
 {
@@ -35,6 +34,10 @@ int main()
 
     test._mainMap = loader.loadConfiguration();
 
+    /// Set the log level for the tester.
+    test.setLogLevel(test._mainMap["info"]["mode"]);
+
+    /// Actual RunTime test.
     Twitter tweet(test._mainMap["twitter"]);
     test.displayMap(tweet._configMap);
 
@@ -46,7 +49,6 @@ int main()
 
     Telegram telegram(test._mainMap["telegram"]);
     test.displayMap(telegram._configMap);
-    // TODO: Set the level of the tester class.
 
     return EXIT_SUCCESS;
 }

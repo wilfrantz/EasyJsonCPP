@@ -30,22 +30,6 @@
 
 #include <header.h>
 
-namespace keysupport
-{
-    class KeySupport
-    {
-    public:
-        virtual ~KeySupport() {}
-        std::map<std::string, std::string> _configMap;
-
-
-        void displayMap(std::map<std::string, std::string> &configMap)
-        {
-
-        }
-        virtual bool supportsKey(const std::string &key) const = 0;
-    };
-}
 namespace easyjson
 {
     class EasyJsonCPP
@@ -55,50 +39,26 @@ namespace easyjson
 
         explicit EasyJsonCPP(const std::string &configFile);
 
-        std::map<std::string, std::map<std::string, std::string>> loadConfiguration();
-        void displayInfo();
-
-        std::map<std::string, std::map<std::string, std::string>> _mainMap;
-        static std::map<std::string, std::string> _configMap;
-
+        void showLibraryInfo();
         void setLogLevel(const std::string &level);
-
         std::map<std::string, std::string> readInfoData();
+        std::map<std::string, std::map<std::string, std::string>> loadConfiguration();
 
-        // Methods to parse the config Json file.
-        void parseConfig(const Json::Value &root);
-        bool isTargetKey(const std::string &key) const;
-        void validateRoot(const Json::Value &root);
-        void parseArrayConfig(const std::string member, const Json::Value &arrayValue);
-        // void parseObjectConfig(const Json::Value &objectValue);
-        void parseObjectConfig(const std::string &member, const Json::Value &objectValue);
-        // void processConfigValue(const std::string &key, const Json::Value &value);
-        void processConfigValue(const std::string &member, const std::string &key, const Json::Value &value);
-
-        // void processTargetKeys(const Json::Value &configValue,
-        //                                const std::string &key);
-
-        // template <typename T>
-        void processTargetKeys(const Json::Value &configValue,
-                               const std::string &key);
+        // Methods to parse the Json configuration file.
+        void validateRootObject(const Json::Value &root);
+        void parseArrayObjectData(const Json::Value &root);
+        void parseArrayMemberData(const std::string member, const Json::Value &arrayValue);
+        void parseObjectMemberData(const std::string &member, const Json::Value &objectValue);
+        void processMemberData(const std::string &member, const std::string &key, const Json::Value &value);
 
         const std::string &getFromConfigMap(const std::string &key,
                                             const std::map<std::string,
                                                            std::string> &configMap = _configMap);
 
-        template <typename T>
-        void loadConfigMap(const std::string &element,
-                           const std::string &value,
-                           T &object)
-        {
-            /// NOTE: Dereference the std::unique_ptr to access the interface object
-            (*object)._configMap[element] = value;
-
-        }
-
-        const std::vector<std::unique_ptr<keysupport::KeySupport>> _container;
-
         ~EasyJsonCPP() = default;
+
+        static std::map<std::string, std::string> _configMap;
+        std::map<std::string, std::map<std::string, std::string>> _mainMap;
 
 #ifdef UNIT_TEST
         friend class EasyJsonMock;
@@ -106,7 +66,6 @@ namespace easyjson
     private:
         std::string _configFile{};
         static std::shared_ptr<spdlog::logger> _logger;
-        std::vector<std::string> _targetKeys{};
 
         // This function recursively calculates the hash value of a null-terminated string
         // using a simple algorithm: multiplying the current hash value by 31 and adding
