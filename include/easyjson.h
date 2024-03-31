@@ -47,7 +47,7 @@ namespace easyjson
         // Methods to parse the Json configuration file.
         void validateRootObject(const Json::Value &root);
         void parseArrayObjectData(const Json::Value &root);
-        void parseArrayMemberData(const std::string member, const Json::Value &arrayValue);
+        void parseArrayMemberData(const std::string &member, const Json::Value &arrayValue);
         void parseObjectMemberData(const std::string &member, const Json::Value &objectValue);
         void processMemberData(const std::string &member, const std::string &key, const Json::Value &value);
 
@@ -60,9 +60,6 @@ namespace easyjson
         static std::map<std::string, std::string> _configMap;
         std::map<std::string, std::map<std::string, std::string>> _mainMap;
 
-#ifdef UNIT_TEST
-        friend class EasyJsonMock;
-#endif
     private:
         std::string _configFile{};
         static std::shared_ptr<spdlog::logger> _logger;

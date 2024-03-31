@@ -145,7 +145,7 @@ namespace easyjson
      * @param member The member name under which the data will be stored.
      * @param arrayValue The JSON array containing objects to be parsed.
      */
-    void EasyJsonCPP::parseArrayMemberData(const std::string member, const Json::Value &arrayValue)
+    void EasyJsonCPP::parseArrayMemberData(const std::string &member, const Json::Value &arrayValue)
     {
         for (const auto &object : arrayValue)
         {
@@ -223,6 +223,7 @@ namespace easyjson
             return errorString;
             throw std::runtime_error(errorString);
         }
+        /// NOTE: SHould never reach this line.
         return errorString;
     }
 

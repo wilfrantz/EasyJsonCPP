@@ -60,20 +60,10 @@ namespace tester
     class Tester final : public EasyJsonCPP
     {
     public:
-        Tester(const std::map<std::string, std::map<std::string, std::string>> &configData)
-            : _mainMap(configData)
-        {
-            _logger = spdlog::get("Tester");
-            if (!_logger)
-            {
-                _logger = spdlog::stdout_color_mt("Tester");
-            }
-            // Load the infoMap with data.
-            testerInfoMap = retrieve("info");
-        };
+        Tester(const std::map<std::string, std::map<std::string,
+                                                    std::string>> &configData);
 
         void displayInfo();
-
         void displayMap(const std::map<std::string, std::string> &configMap);
         void displayMap(const std::map<std::string, std::map<std::string, std::string>> &configMap);
 
@@ -85,6 +75,9 @@ namespace tester
         static std::shared_ptr<spdlog::logger> _logger;
         std::map<std::string, std::string> testerInfoMap;
 
+#ifdef UNIT_TEST
+        friend class EasyJsonMock;
+#endif
     private:
         const std::map<std::string, std::map<std::string, std::string>> _mainMap;
     };

@@ -5,6 +5,18 @@ namespace tester
 {
         std::shared_ptr<spdlog::logger> Tester::_logger = spdlog::stdout_color_mt("Tester");
 
+        Tester::Tester(const std::map<std::string, std::map<std::string, std::string>> &configData)
+            : _mainMap(configData)
+        {
+                _logger = spdlog::get("Tester");
+                if (!_logger)
+                {
+                        _logger = spdlog::stdout_color_mt("Tester");
+                }
+                // Load the infoMap with data.
+                testerInfoMap = retrieve("info");
+        };
+
         // Tester method to print the content of the nested map
         // void Tester::printNestedMap(const std::string &prefix = "")
         // void Tester::printNestedMap(const std::string &prefix = "")
