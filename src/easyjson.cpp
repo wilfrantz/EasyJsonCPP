@@ -14,7 +14,7 @@ namespace easyjson
             _logger = spdlog::stdout_color_mt("EasyJson");
         }
 
-        // display library information
+        // Show library information
         showLibraryInfo();
     }
 
@@ -31,6 +31,7 @@ namespace easyjson
      */
     std::map<std::string, std::map<std::string, std::string>> EasyJsonCPP::loadConfiguration()
     {
+        // Check if the configuration file path is empty
         if (_configFile.empty())
         {
             const std::string &errorMsg = _configFile + ": file is empty";
@@ -42,8 +43,8 @@ namespace easyjson
         {
             _logger->debug("Loading configuration file: {}", _configFile);
 
+            // Open the configuration file
             std::ifstream file(_configFile);
-
             if (!file.is_open())
             {
                 std::string error_msg = "Could not open config file: " + _configFile;
@@ -51,11 +52,14 @@ namespace easyjson
                 throw std::runtime_error(error_msg);
             }
 
+            // Parse the JSON data
             Json::Value root;
             file >> root;
 
-            // Validate the format of the root object.
+            // Validate the format of the root object and invoke the appropriate parsing method
             validateRootObject(root);
+
+            // Return the map to the caller.
             return this->_mainMap;
         }
         catch (const std::exception &e)
@@ -305,7 +309,7 @@ namespace easyjson
 
     std::map<std::string, std::string> EasyJsonCPP::readInfoData()
     {
-        const std::string &filename = "infodata.json";
+        const std::string &filename = "metadata.json";
 
         std::ifstream file(filename);
         Json::Value root;

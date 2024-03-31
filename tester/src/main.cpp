@@ -30,24 +30,22 @@ using namespace instagram;
 int main()
 {
     EasyJsonCPP loader("easy_config.json");
-    Tester test;
-
-    test._mainMap = loader.loadConfiguration();
+    Tester test(loader.loadConfiguration());
 
     /// Set the log level for the tester.
-    test.setLogLevel(test._mainMap["info"]["mode"]);
+    test.setLogLevel(test.testerInfoMap["mode"]);
 
-    /// Actual RunTime test.
-    Twitter tweet(test._mainMap["twitter"]);
+    /// RunTime test.
+    Twitter tweet(test.retrieve("twitter"));
     test.displayMap(tweet._configMap);
 
-    Tiktok tiktok(test._mainMap["tiktok"]);
+    Tiktok tiktok(test.retrieve("tiktok"));
     test.displayMap(tiktok._configMap);
 
-    Instagram gram(test._mainMap["instagram"]);
+    Instagram gram(test.retrieve("instagram"));
     test.displayMap(gram._configMap);
 
-    Telegram telegram(test._mainMap["telegram"]);
+    Telegram telegram(test.retrieve("telegram"));
     test.displayMap(telegram._configMap);
 
     return EXIT_SUCCESS;

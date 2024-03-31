@@ -67,7 +67,7 @@ namespace easyjson
         std::string _configFile{};
         static std::shared_ptr<spdlog::logger> _logger;
 
-        // This function recursively calculates the hash value of a null-terminated string
+        // NOTE: This function recursively calculates the hash value of a null-terminated string
         // using a simple algorithm: multiplying the current hash value by 31 and adding
         // the ASCII value of the current character.
         static constexpr std::size_t hash(const char *s, std::size_t h = 0)

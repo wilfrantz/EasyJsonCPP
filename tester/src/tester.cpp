@@ -5,24 +5,6 @@ namespace tester
 {
         std::shared_ptr<spdlog::logger> Tester::_logger = spdlog::stdout_color_mt("Tester");
 
-        /// @brief Process the target keys in the config file
-        /// @param configValue[in] The value of the target key
-        /// @param key[in] The name of the target key
-        /// @return none.
-        void Tester::processTargetKeys(const Json::Value &configValue, const std::string &key)
-        {
-                _logger->debug("Processing target key: {}", key);
-                if (configValue.isArray())
-                {
-                        /// NOTE: implementation in the tester.
-                }
-                else
-                {
-                        // Invalid value type
-                        throw std::runtime_error("Invalid format for object value in the configuration file.");
-                }
-        }
-
         // Tester method to print the content of the nested map
         // void Tester::printNestedMap(const std::string &prefix = "")
         // void Tester::printNestedMap(const std::string &prefix = "")
@@ -47,7 +29,7 @@ namespace tester
                 if (configMap.empty())
                 {
                         _logger->error("Map is empty.");
-                        exit(EXIT_FAILURE);
+                        throw std::runtime_error("Map is empty");
                 }
 
                 for (const auto &outPair : configMap)

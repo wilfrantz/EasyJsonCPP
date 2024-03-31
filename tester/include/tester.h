@@ -49,7 +49,7 @@ namespace telegram
     class Telegram
     {
     public:
-        Telegram(std::map<std::string, std::string> map) : _configMap(map) {}
+        Telegram(const std::map<std::string, std::string> &map) : _configMap(map) {}
         std::map<std::string, std::string> _configMap;
     };
 }
@@ -60,13 +60,16 @@ namespace tester
     class Tester final : public EasyJsonCPP
     {
     public:
-        Tester()
+        Tester(const std::map<std::string, std::map<std::string, std::string>> &configData)
+            : _mainMap(configData)
         {
             _logger = spdlog::get("Tester");
             if (!_logger)
             {
                 _logger = spdlog::stdout_color_mt("Tester");
             }
+            // Load the infoMap with data.
+            testerInfoMap = retrieve("info");
         };
 
         void displayInfo();
@@ -74,13 +77,16 @@ namespace tester
         void displayMap(const std::map<std::string, std::string> &configMap);
         void displayMap(const std::map<std::string, std::map<std::string, std::string>> &configMap);
 
-        void processTargetKeys(const Json::Value &configValue, const std::string &key);
-
-        std::map<std::string, std::map<std::string, std::string>> _mainMap;
+        inline const std::map<std::string, std::string> retrieve(std::string key)
+        {
+            return _mainMap.at(key);
+        }
 
         static std::shared_ptr<spdlog::logger> _logger;
+        std::map<std::string, std::string> testerInfoMap;
 
     private:
+        const std::map<std::string, std::map<std::string, std::string>> _mainMap;
     };
 }
 
