@@ -46,7 +46,7 @@ elseif(APPLE)
 endif()
 
 # Optionally build and run tests
-option(BUILD_TESTS "Build tests" OFF)
+option(BUILD_TESTS "Build tests" ON)
 if(BUILD_TESTS)
     message(STATUS "Building tests ...")
     enable_testing()
