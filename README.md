@@ -3,15 +3,13 @@
 
 `easyJsonCPP` is a streamlined `C++` library designed for effortless integration and management of `JSON` configuration files. It abstracts the complexities of JSON parsing, allowing developers to efficiently handle configuration data within their `C++` applications.
 
-<u>Table of Contents</u>
+Table of Contents
 
 - [easyJsonCPP](#easyjsoncpp)
   - [Features](#features)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-  - [Usage](#usage)
   - [Progress | `TODO`](#progress--todo)
-  - [Possible Improvements](#possible-improvements)
   - [Contributing to `easyJsonCPP`](#contributing-to-easyjsoncpp)
   - [License](#license)
   - [Contact](#contact)
@@ -35,20 +33,51 @@ Before you begin, ensure you have met the following requirements:
 
 ## Installation
 
-To use `easyJsonCPP` in your project, include the `easyJsonCPP.h` header file in your source code. Ensure that JSONCPP and spdlog are properly set up in your build environment.
+To use the `EasyJsonCPP` library in your `C++` project, follow these steps:
 
-## Usage
+1- Include EasyJsonCPP in Your Project: Add EasyJsonCPP as a dependency in your CMakeLists.txt file:
+cmake
 
-Here's a quick example to get you started:
+```bash
+find_package(easyjson REQUIRED)
+```
 
-```cpp
-#include "include/easyJsonCPP.h"
+2- Link EasyJsonCPP: Link EasyJsonCPP library to your target:
 
-int main() {
-    easyjson::EasyJsonCPP configLoader("config.json");
-    configLoader.loadConfig();
-    // Your code to utilize the parsed configuration...
+```bash
+target_link_libraries(your_target easyjson)
+```
+
+3- Use EasyJsonCPP APIs: Include the necessary headers in your source files and start using EasyJsonCPP APIs to handle JSON configuration files. For example:
+
+```c
+#include <easyjson.h>
+
+int main() 
+{
+    EasyJsonCPP easyjson("config.json");
+    auto configMap = easyjson.loadConfiguration();
+
+    // Access and process configuration data
+    auto value = easyjson.getFromConfigMap("key", configMap);
+    // Do something with the value...
+
+    return 0;
 }
+```
+
+4- uild Your Project: After integrating EasyJsonCPP into your project, build it using CMake:
+
+```c
+mkdir build && cd build
+cmake ..
+cmake --build .
+```
+
+5- un Your Application: Once built successfully, run your application to see EasyJsonCPP in action:
+
+```bash
+./your_application
 ```
 
 ## Progress | `TODO`
@@ -56,18 +85,9 @@ int main() {
 - [x] Create [design document](https://dede.dev/posts/Building-Compiled-Libraries/){: target="_blank"}.
 - [x] Build the Structure.
   - [x] Implement core functionality.
-  - [ ] Load configuration data into each interface.
-- [ ] Create Build Management `cmakefile.txt`.
+  - [x] Load configuration data into each interface.
+- [x] Create Build Management `cmakefile.txt`.
 - [ ] Build Unit Test.
-
-## Possible Improvements
-
-- Configuration File Setter: The library could benefit from a method to set _configFile after constructing an EasyJsonCPP object. Currently, it seems that `_configFile` must be set through the constructor only.
-- Error Messages: While the error messages are clear, they could be more descriptive in some cases. For example, specifying which key or value caused an error could be helpful for debugging.
-- Exception Safety: Ensure that all methods are exception-safe. For instance, when working with file streams and JSON parsing, exceptions should be handled gracefully to avoid resource leaks or undefined states.
-- Method Visibility and Reusability: Some methods like processConfigValue, parseArrayConfig, and parseObjectConfig could potentially be useful as public methods, depending on the intended use cases of the library.
-- Dependency Management: There's an assumption that all required libraries (like JSONCPP and spdlog) are pre-installed and configured in the user's environment. Providing a setup script or instructions for installing these dependencies could enhance user experience.
-- Unit Tests: Adding unit tests for each method would be beneficial for ensuring code quality, especially for a library dealing with file parsing and configuration management.
 
 ## Contributing to `easyJsonCPP`
 

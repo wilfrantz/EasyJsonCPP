@@ -22,19 +22,19 @@ EasyJsonCPP is a C++ library designed to simplify the integration and handling o
 
 - **Purpose**: Serves as the main class for handling JSON configuration files.
 - **Methods**:
-  - `loadConfig`: Loads and parses the JSON configuration file.
-  - `validateConfigRoot`: Validates the root element of the JSON configuration.
-  - `parseConfig`: Parses the root JSON element, iterating through objects and arrays.
+  - `loadConfiguration`: Loads and parses the JSON configuration file, returning a map containing the parsed data.
+  - `validateRootObject`: Validates the root element of the JSON configuration.
+  - `parseArrayMemberData`: Parses an array of objects from the configuration file.
+  - `parseObjectMemberData`: Parses key-value pairs within a JSON object.
+  - `processMemberData`: Processes the value associated with a given key within an object.
+  - `setLogLevel`: Sets the logging level based on the provided string.
+  - `getFromConfigMap`: Retrieves a value from the provided configuration map based on the given key.
+  - `showLibraryInfo`: Displays information about the library, project, version, description, and author.
+  - `readInfoData`: Reads and parses information data from a JSON file.
+  - `processConfigValue`: Processes the value associated with a given key within the configuration.
+  - `parseObjectConfig`: Parses key-value pairs within the root JSON element.
   - `parseArrayConfig`: Processes each object within a JSON array.
-  - `parseObjectConfig`: Parses each key-value pair within a JSON object.
-  - `processConfigValue`: Processes the value associated with a given key.
-
-### Members
-
-#### Private Members of EasyJsonCPP
-
-- `_configFile`: Stores the path to the JSON configuration file.
-- `_logger`: Shared pointer to spdlog's logger for logging purposes.
+  - `loadConfig`: Legacy method for loading and parsing the JSON configuration file (deprecated).
 
 ## Dependencies
 
@@ -48,6 +48,7 @@ EasyJsonCPP is a C++ library designed to simplify the integration and handling o
 ## Logging
 
 - Uses `spdlog` for logging various stages of configuration processing, aiding in debugging and error tracing.
+- **setLogLevel**: Sets the logging level based on the provided string. Allows developers to control the verbosity of logging messages.
 
 ## Installation and Setup
 
@@ -66,7 +67,7 @@ EasyJsonCPP is a C++ library designed to simplify the integration and handling o
 
 ## Future Enhancements
 
-- Addition of configuration file setters and getters.
+- Addition of support for more configuration file object formats.
 - More detailed error messages for enhanced debugging.
 - Enhanced exception safety in file and JSON operations.
 

@@ -18,13 +18,16 @@ namespace easyjson
         showLibraryInfo();
     }
 
-    /**
-     * @brief Loads the JSON configuration file into the application.
-     * This method checks if the configuration file path is set and non-empty. It then attempts to open the file,
-     * read the JSON content, and parse it into the application's configuration structure. If the file is not found,
-     * cannot be opened, or if its contents are not valid JSON, the method logs an appropriate error message and
-     * throws a runtime exception. It also validates and processes the JSON content through 'validateConfigRoot'
-     * and 'parseConfig' methods.
+    /** @brief
+     * Loads the configuration from the specified configuration file.
+     * It first checks if the configuration file path is empty.
+     * If it's not empty, it attempts to open the file and parse its contents into a JSON object.
+     * It then validates the format of the root object using validateRootObject().
+     * If successful, it returns the main map containing the parsed configuration data.
+     * If any error occurs during the process, it logs an error message and throws a runtime_error.
+     *
+     * @return A map containing the parsed configuration data.
+     * @throw std::runtime_error If there's an error processing the configuration file.
      */
     std::map<std::string, std::map<std::string, std::string>> EasyJsonCPP::loadConfiguration()
     {
@@ -63,14 +66,14 @@ namespace easyjson
         }
     }
 
-    /**
-     * @brief Validates the root element of the loaded JSON configuration.
-     * This method checks whether the root element of the JSON configuration is an array.
-     * It is a critical validation step to ensure that the configuration file adheres to
-     * the expected format. If the root element is not an array, a runtime error is thrown,
-     * indicating an invalid configuration format.
-     * @param root A reference to the Json::Value object representing the root element of the JSON configuration.
-     * @throws std::runtime_error If the root element of the JSON configuration is not an array.
+    /** @brief
+     * Validates the root object of the configuration file.
+     * It checks whether the root is an array or an object.
+     * If it's an array, it calls parseArrayObjectData() to parse it.
+     * If it's an object, it may perform additional validation or processing in the future.
+     * If it's neither an array nor an object, it throws a runtime_error.
+     *
+     * @param root The root JSON value of the configuration file.
      */
     void EasyJsonCPP::validateRootObject(const Json::Value &root)
     {
@@ -88,17 +91,15 @@ namespace easyjson
         }
     }
 
-    /**
-     * @brief Parses the JSON configuration file's root element.
+    /** @brief
+     * Parses an array of objects from the configuration file rootObjects.
+     * It iterates over each object in the array, verifying that each is indeed an object.
+     * For each object, it iterates over its members and checks whether each member's value is an array or object.
+     * If it's an array, it calls parseArrayMemberData() to process it.
+     * If it's an object, it calls parseObjectMemberData() to process it.
+     * If the value is neither an array nor an object, it throws a runtime_error.
      *
-     * This method iterates through each object in the root JSON array, validating and parsing its contents.
-     * It checks if each element in the root is an object and then processes each key-value pair within these objects.
-     * The method handles different types of values: it processes target keys with specific actions, parses arrays and
-     * objects recursively, and throws an error for invalid formats. This comprehensive parsing ensures the configuration
-     * data is correctly interpreted and integrated into the application's settings.
-     *
-     * @param root A reference to the Json::Value object representing the root element of the JSON configuration.
-     * @throws std::runtime_error If any element in the root array is not an object, or if the format of an object's value is invalid.
+     * @param rootObjects The JSON array of objects to be parsed.
      */
     void EasyJsonCPP::parseArrayObjectData(const Json::Value &rootObjects)
     {
@@ -131,16 +132,14 @@ namespace easyjson
         }
     }
 
-    /**
-     * @brief Parses each object within a JSON array from the configuration file.
+    /** @brief
+     * Parses data for a member of type array in the configuration file.
+     * It iterates over the elements of the arrayValue, each of which should be an object.
+     * If any element is not an object, it throws a runtime_error.
+     * For each object element, it calls parseObjectMemberData() to process the object.
      *
-     * This method iterates through an array of JSON objects, ensuring each element in the array is indeed an object.
-     * It then delegates the parsing of each individual object to the `parseObjectConfig` method. If any element
-     * in the array is not a JSON object, a runtime error is thrown, signaling an invalid format in the configuration file.
-     * This method is typically called when a JSON array is encountered during the configuration parsing process.
-     *
-     * @param arrayValue A reference to the Json::Value object representing the JSON array to be parsed.
-     * @throws std::runtime_error If any element within the array is not a JSON object.
+     * @param member The member name under which the data will be stored.
+     * @param arrayValue The JSON array containing objects to be parsed.
      */
     void EasyJsonCPP::parseArrayMemberData(const std::string member, const Json::Value &arrayValue)
     {
@@ -155,15 +154,12 @@ namespace easyjson
         }
     }
 
-    /**
-     * @brief Parses and processes each key-value pair within a JSON object from the configuration file.
-     *
-     * This method iterates over each member (key-value pair) of a JSON object. For every pair encountered,
-     * it calls the `processConfigValue` method to handle the processing of each specific key and its associated value.
-     * This approach allows for a modular and flexible handling of various configuration settings defined in the JSON object.
-     * It is typically invoked for each object encountered in the JSON configuration, enabling granular processing of configuration data.
-     *
-     * @param objectValue A reference to the Json::Value object representing the JSON object to be parsed.
+    /** @brief
+     * Parses data for a member of type object in the configuration file.
+     * It iterates over the keys and values of the objectValue,
+     * calling `processMemberData()` for each key-value pair.
+     * @param member The member name under which the data will be stored.
+     * @param objectValue The JSON object containing key-value pairs to be parsed.
      */
     void EasyJsonCPP::parseObjectMemberData(const std::string &member, const Json::Value &objectValue)
     {
@@ -176,13 +172,13 @@ namespace easyjson
     }
 
     /**
-     * @brief Process and store a configuration value in the EasyJsonCPP multidimensional configuration map.
-     *
-     * This function is responsible for processing a key-value pair from a JSON configuration file.
-     * It checks the type of the JSON value (string or integer) and stores it in the configuration map.
-     * @param key The configuration key (string).
-     * @param value The JSON value associated with the key.
-     * @throws std::runtime_error if the JSON value is not a string or an integer.
+     *  @brief data for a member in the configuration file.
+     * If the section value is a string or an integer, it stores it in the main map
+     *  under the given member and section name.
+     * If the section value is neither a string nor an integer, it throws a runtime_error.
+     * @param member The member name under which the data will be stored.
+     * @param sectionName The name of the section within the member.
+     * @param sectionValue The value associated with the section.
      */
     void EasyJsonCPP::processMemberData(const std::string &member,
                                         const std::string &sectionName,
@@ -190,7 +186,7 @@ namespace easyjson
     {
         if (sectionValue.isString() || sectionValue.isInt())
         {
-            _mainMap[member][sectionName] = sectionValue.asString();
+            this->_mainMap[member][sectionName] = sectionValue.asString();
         }
         else
         {
@@ -198,9 +194,15 @@ namespace easyjson
         }
     }
 
-    /// @brief Read from the config file
-    /// @param key[in] The key to read from the config file.
-    /// @return The value of the key or an error string.
+    /**
+     * Retrieves the value associated with the provided key from the given configuration map.
+     * If the key is found, returns a reference to the corresponding value.
+     * If the key is not found, logs an error message and returns a reference to a static error string.
+     *
+     * @param key The key whose associated value is to be retrieved.
+     * @param configMap The configuration map to search for the key.
+     * @return A reference to the value associated with the key if found, otherwise a reference to a static error string.
+     */
     const std::string &EasyJsonCPP::getFromConfigMap(const std::string &key,
                                                      const std::map<std::string, std::string> &configMap)
     {
@@ -220,9 +222,14 @@ namespace easyjson
         return errorString;
     }
 
-    /// @brief Set the log level.
-    /// @param level
-    /// return none.
+    /** @brief
+     * Sets the log level of the application based on the provided level string.
+     * Valid log levels include 'debug', 'info', 'warn', 'error', 'critical', and 'off'.
+     * If an invalid log level is provided, it defaults to 'debug' and logs a warning message.
+     *
+     * @param level The log level to set.
+     */
+
     void EasyJsonCPP::setLogLevel(const std::string &level)
     {
         spdlog::level::level_enum log_level;
@@ -257,9 +264,12 @@ namespace easyjson
         _logger->info("Log level set to: {} \n", level);
     }
 
-    /// @brief  Print a welcome message
-    /// @param  none.
-    /// @return none.
+    /** @brief:
+     * Shows information about the library including project name, version, description, author, and log level.
+     * Also reads information data from a JSON file and sets the log level based on the mode specified in the data.
+     * Additionally, it logs the versions of jsoncpp and spdlog if available.
+     * @return none.
+     */
     void EasyJsonCPP::showLibraryInfo()
     {
 
@@ -285,7 +295,14 @@ namespace easyjson
 #endif
     }
 
-    // Function to read JSON data from infodata file
+    /** @brief Reads information data from a JSON file named "infodata.json"
+     * returns a map of string key-value pairs.
+     * Each key-value pair corresponds to a member in the "info" object within the JSON file.
+     * If the file cannot be parsed or an error occurs, it throws a runtime_error.
+     *
+     * @return A map containing information data read from the JSON file.
+     */
+
     std::map<std::string, std::string> EasyJsonCPP::readInfoData()
     {
         const std::string &filename = "infodata.json";
