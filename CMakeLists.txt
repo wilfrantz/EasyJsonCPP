@@ -103,3 +103,12 @@ install(TARGETS ${PROJECT_NAME}_static
 if(UNIX AND NOT APPLE)
     install(CODE "execute_process(COMMAND ldconfig)")
 endif()
+
+# Optionally build and run tests
+option(BUILD_TESTS "Build tests" ON)
+if(BUILD_TESTS)
+    message(STATUS "Building tests ...")
+    enable_testing()
+    add_subdirectory(test)
+    add_test(NAME ${PROJECT_NAME}_tests COMMAND test/${PROJECT_NAME}_test)
+endif()

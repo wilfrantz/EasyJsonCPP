@@ -60,6 +60,9 @@ namespace easyjson
         static std::map<std::string, std::string> _configMap;
         std::map<std::string, std::map<std::string, std::string>> _mainMap;
 
+#ifdef UNIT_TEST
+        friend class EasyJsonMock;
+#endif
     private:
         std::string _configFile{};
         static std::shared_ptr<spdlog::logger> _logger;

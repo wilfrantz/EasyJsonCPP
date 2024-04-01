@@ -11,6 +11,11 @@ option(CMAKE_VERBOSE_MAKEFILE "Verbose Makefile" ON)
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
+# Add fmt and jsoncpp libraries
+find_package(fmt REQUIRED)
+find_package(spdlog REQUIRED)
+find_library(JSONCPP_LIBRARIES NAMES jsoncpp)
+
 # Add your test files here
 set(TEST_SOURCES
     src/main.cpp
@@ -20,9 +25,12 @@ set(TEST_SOURCES
 # Create an executable for tests
 add_executable(${PROJECT_NAME} ${TEST_SOURCES})
 
-# Link the test executable with GoogleTest
+# Link the test executable with GoogleTest, fmt, and jsoncpp
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ${GTEST_BOTH_LIBRARIES}
+    fmt::fmt
+    spdlog::spdlog
+    /usr/local/Cellar/jsoncpp/1.9.5/lib/libjsoncpp.dylib
 )
 
 # Add tests to CTest

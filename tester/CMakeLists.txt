@@ -25,9 +25,6 @@ target_include_directories(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-# Link against the installed library
-# target_link_libraries(${${PROJECT_NAME}}${EASYJSON_LIBRARY})
-
 # Link libraries based on the operating system
 if(UNIX AND NOT APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -43,13 +40,4 @@ elseif(APPLE)
         /usr/local/Cellar/easyjson/0.0.1/lib/libeasyjson.dylib
 
     )
-endif()
-
-# Optionally build and run tests
-option(BUILD_TESTS "Build tests" ON)
-if(BUILD_TESTS)
-    message(STATUS "Building tests ...")
-    enable_testing()
-    add_subdirectory(test)
-    add_test(NAME ${PROJECT_NAME}_tests COMMAND test/${PROJECT_NAME}_test)
 endif()

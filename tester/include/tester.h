@@ -75,9 +75,6 @@ namespace tester
         static std::shared_ptr<spdlog::logger> _logger;
         std::map<std::string, std::string> testerInfoMap;
 
-#ifdef UNIT_TEST
-        friend class EasyJsonMock;
-#endif
     private:
         const std::map<std::string, std::map<std::string, std::string>> _mainMap;
     };
