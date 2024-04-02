@@ -10,7 +10,7 @@ option(CMAKE_VERBOSE_MAKEFILE "Verbose Makefile" ON)
 # Find required packages
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
-find_library(JSONCPP_LIBRARIES NAMES jsoncpp)
+find_library(JSONCPP_LIBRARIES NAMES jsoncpp REQUIRED)
 
 # Define the source files for the library
 set(SOURCE_FILES

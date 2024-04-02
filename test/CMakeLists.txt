@@ -15,6 +15,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_library(JSONCPP_LIBRARIES NAMES jsoncpp)
+find_library(EASYJSON_LIBRARY NAMES easyjson)
 
 # Add your test files here
 set(TEST_SOURCES
