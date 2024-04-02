@@ -14,8 +14,8 @@ include_directories(${GTEST_INCLUDE_DIRS})
 # Add fmt and jsoncpp libraries
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
-find_library(JSONCPP_LIBRARIES NAMES jsoncpp)
-find_library(EASYJSON_LIBRARY NAMES easyjson)
+# find_library(JSONCPP_LIBRARIES NAMES jsoncpp)
+# find_library(EASYJSON_LIBRARY NAMES easyjson)
 
 # Add your test files here
 set(TEST_SOURCES
@@ -27,11 +27,29 @@ set(TEST_SOURCES
 add_executable(${PROJECT_NAME} ${TEST_SOURCES})
 
 # Link the test executable with GoogleTest, fmt, and jsoncpp
+# if(UNIX AND NOT APPLE)
+#     target_link_libraries(${PROJECT_NAME} PRIVATE
+#         jsoncpp
+#         fmt::fmt
+#         spdlog::spdlog
+#     )
+# elseif(APPLE)
+# target_link_libraries(${PROJECT_NAME} PRIVATE
+#     ${GTEST_BOTH_LIBRARIES}
+#     fmt::fmt
+#     spdlog::spdlog
+#     /usr/local/Cellar/jsoncpp/1.9.5/lib/libjsoncpp.dylib
+# )
+# endif()
+
+# Link the test executable with GoogleTest, fmt, spdlog, and jsoncpp
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${GTEST_BOTH_LIBRARIES}
+    GTest::GTest
+    GTest::Main
     fmt::fmt
     spdlog::spdlog
-    /usr/local/Cellar/jsoncpp/1.9.5/lib/libjsoncpp.dylib
+    jsoncpp
+    /usr/local/Cellar/easyjson/0.0.1/lib/libeasyjson.dylib
 )
 
 # Add tests to CTest

@@ -3,6 +3,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+
 #include <easyjson.h>
 
 namespace easyjson
@@ -10,7 +11,13 @@ namespace easyjson
     class EasyJsonMock : public ::testing::Test
     {
     public:
-        EasyJsonMock() : easy(new EasyJsonCPP()) {}
+        // EasyJsonMock() : easyJson(new EasyJsonCPP()) {}
+        EasyJsonMock() {}
+
+        void processMemberDataMock(const std::string &member, const std::string &key, const Json::Value &value)
+        {
+            easyJson->processMemberData(member, key, value);
+        }
 
         // Mock methods
         // MOCK_METHOD(void, loadConfiguration, ());
@@ -20,12 +27,14 @@ namespace easyjson
         // MOCK_METHOD(void, parseObjectMemberData, (const std::string &member, const Json::Value &objectValue));
         MOCK_METHOD(void, processMemberData, (const std::string &member, const std::string &key, const Json::Value &value));
 
-        ~EasyJsonMock() { delete easy; }
+
+        EasyJsonCPP *easyJson;
+
+        ~EasyJsonMock() {}
 
     protected:
-        EasyJsonCPP *easy;
-
         void SetUp() override {}
+        void TestBody() override {}
         void TearDown() override {}
     };
 } // namespace easyjson
