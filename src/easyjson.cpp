@@ -168,10 +168,17 @@ namespace easyjson
     void EasyJsonCPP::parseObjectMemberData(const std::string &member, const Json::Value &objectValue)
     {
 
-        for (const auto &key : objectValue.getMemberNames())
+        if (objectValue.isObject())
         {
-            const auto &value = objectValue[key];
-            processMemberData(member, key, value);
+            for (const auto &key : objectValue.getMemberNames())
+            {
+                const auto &value = objectValue[key];
+                processMemberData(member, key, value);
+            }
+        }
+        else
+        {
+            throw std::runtime_error("Invalid format for object in configuration file.");
         }
     }
 
