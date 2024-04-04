@@ -20,7 +20,7 @@ find_package(spdlog REQUIRED)
 # Add your test files here
 set(TEST_SOURCES
     src/main.cpp
-    src/UT_loadconfig.cpp
+    src/UT_easyJsonTest.cpp
 )
 
 # Create an executable for tests
