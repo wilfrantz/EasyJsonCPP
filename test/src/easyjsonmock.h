@@ -12,11 +12,8 @@ namespace easyjson
     {
     public:
         EasyJsonMock() : easyJson(new EasyJsonCPP()) {}
-        // EasyJsonMock() {}
 
-        // parseObjectMemberData(member, key);
         void gmock_parseArrayObjectData(const Json::Value &rootObjects)
-        // void parseArrayObjectDataMock(const Json::Value &rootObjects)
         {
             easyJson->parseArrayObjectData(rootObjects);
         }
@@ -26,17 +23,7 @@ namespace easyjson
             easyJson->processMemberData(member, key, value);
         }
 
-        void processMemberDataMock(const std::string &member, const std::string &key, const Json::Value &value)
-        {
-            easyJson->processMemberData(member, key, value);
-        }
-
         void gmock_parseObjectMemberData(const std::string &member, const Json::Value &objectValue)
-        {
-            easyJson->parseObjectMemberData(member, objectValue);
-        }
-
-        void parseObjectMemberDataMock(const std::string &member, const Json::Value &objectValue)
         {
             easyJson->parseObjectMemberData(member, objectValue);
         }

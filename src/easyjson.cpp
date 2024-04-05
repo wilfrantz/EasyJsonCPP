@@ -105,17 +105,33 @@ namespace easyjson
      *
      * @param rootObjects The JSON array of objects to be parsed.
      */
+
     void EasyJsonCPP::parseArrayObjectData(const Json::Value &rootObjects)
     {
         _logger->debug("Parsing configuration file: {}.", this->_configFile);
 
+        // Check objects.
+        if (rootObjects.empty())
+        {
+            throw std::runtime_error("Objects in configuration is empty.");
+        }
+
         for (const auto &object : rootObjects)
         {
+            // Check object format
             if (!object.isObject())
             {
                 throw std::runtime_error("Invalid format for object in configuration file.");
             }
 
+            // Check if object is empty.
+            //  TODO: skip over empty objects here.
+            if (object.empty())
+            {
+                throw std::runtime_error("Empty object in configuration is empty.");
+            }
+
+            // Process object.
             for (const auto &member : object.getMemberNames())
             {
                 const auto &key = object[member];
