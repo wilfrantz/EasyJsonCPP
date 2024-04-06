@@ -4,24 +4,31 @@ using namespace easyjson;
 
 TEST(EasyJsonMock, parseArrayObjectDataPassed)
 {
-    Json::Value object;
-    Json::Value arrayMember(Json::arrayValue);
-    Json::Value rootObjects(Json::arrayValue);
+    std::string jsonString = R"([{
+        "server" : {
+            "port" : "8080",
+            "domain" : "example.com",
+            "address" : "192.168.1.1"
+        }
+    }])";
 
-    arrayMember.append("8080");
-    arrayMember.append("example.com");
-    arrayMember.append("192.168.1.1");
-    object["server"] = arrayMember;
+    Json::Value objects(Json::arrayValue);
+    Json::CharReaderBuilder builder;
+    Json::CharReader *reader = builder.newCharReader();
 
-    Json::Value objectMember; 
-    objectMember["key"] = "value";
-    object["objectMember"] = objectMember;
+    // Parse the JSON string into the Json::Value object
+    std::string errors;
+    bool parsingSuccessful = reader->parse(jsonString.c_str(), jsonString.c_str() + jsonString.length(), &objects, &errors);
+    delete reader;
 
-    rootObjects.append(object); 
+    // Check if parsing was successful
+    if (!parsingSuccessful)
+    {
+        throw std::runtime_error("Failed to parse JSON.");
+    }
 
     EasyJsonMock mock;
-
-    ASSERT_NO_THROW(mock.gmock_parseArrayObjectData(rootObjects));
+    ASSERT_NO_THROW(mock.gmock_parseArrayObjectData(objects));
 }
 
 TEST(EasyJsonMock, parseArrayObjectDataFailed)
