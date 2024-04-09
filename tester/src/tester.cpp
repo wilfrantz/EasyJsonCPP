@@ -15,6 +15,8 @@ namespace tester
                 }
                 // Load the infoMap with data.
                 testerInfoMap = retrieve("info");
+                /// Set log level for the tester.
+                setLogLevel(testerInfoMap["mode"]);
         };
 
         // Tester method to print the content of the nested map

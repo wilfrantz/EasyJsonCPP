@@ -32,10 +32,7 @@ int main()
     EasyJsonCPP loader("easy_config.json");
     Tester test(loader.loadConfiguration());
 
-    /// Set the log level for the tester.
-    test.setLogLevel(test.testerInfoMap["mode"]);
-
-    /// RunTime test.
+    /// *************************** RunTime test. *************************
     Twitter tweet(test.retrieve("twitter"));
     test.displayMap(tweet._configMap);
 
