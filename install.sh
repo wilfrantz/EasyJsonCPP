@@ -1,7 +1,8 @@
 #!/bin/bash
 
 TESTER="../tester/"
-# Remove build directory if exists
+
+# Remove build directory if it exists
 if [ -d ./build/ ]; then
 	rm -rf ./build
 fi

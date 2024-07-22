@@ -2,7 +2,7 @@
 
 using namespace easyjson;
 
-TEST(EasyJsonMock, parseArrayObjectDataPassed)
+TEST_F(EasyJsonMock, parseArrayObjectDataPassed)
 {
     std::string jsonString = R"([{
         "server" : {
@@ -31,32 +31,29 @@ TEST(EasyJsonMock, parseArrayObjectDataPassed)
     ASSERT_NO_THROW(mock.gmock_parseArrayObjectData(objects));
 }
 
-TEST(EasyJsonMock, parseArrayObjectDataFailed)
+TEST_F(EasyJsonMock, parseArrayObjectDataFailed)
 {
-
     try
     {
         Json::Value arrayObj;
-
         Json::Value arrayValue(Json::arrayValue);
-
         Json::Value objectValue;
+
         objectValue["data1"] = "data2";
         arrayValue.append(objectValue);
-
         arrayObj["array"] = arrayValue;
+
         EasyJsonMock mock;
-        // mock.parseArrayObjectDataMock(arrayObj);
         mock.gmock_parseArrayObjectData(arrayObj);
     }
     catch (const std::runtime_error &e)
     {
         std::string error("Invalid format for object in configuration file.");
-        EXPECT_EQ(e.what(), error);
+        ASSERT_EQ(e.what(), error);
     }
 }
 
-TEST(EasyJsonMock, processMemberDataPassed)
+TEST_F(EasyJsonMock, processMemberDataPassed)
 {
     std::string member = "member1";
     std::string key = "section1";
@@ -72,13 +69,12 @@ TEST(EasyJsonMock, processMemberDataPassed)
     catch (const std::runtime_error &e)
     {
         std::string error("Invalid format for object value in configuration file.");
-        EXPECT_EQ(e.what(), error);
+        ASSERT_EQ(e.what(), error);
     }
 }
 
-TEST(EasyJsonMock, parseObjectMemberDataFailed)
+TEST_F(EasyJsonMock, parseObjectMemberDataFailed)
 {
-
     try
     {
         std::string member = "member";
@@ -90,13 +86,12 @@ TEST(EasyJsonMock, parseObjectMemberDataFailed)
     }
     catch (const std::runtime_error &e)
     {
-        // ("Invalid format for object value in configuration file.")
         std::string error("Invalid format for object in configuration file.");
-        EXPECT_EQ(e.what(), error);
+        ASSERT_EQ(e.what(), error);
     }
 }
 
-TEST(EasyJsonMock, parseObjectMemberDataPassed)
+TEST_F(EasyJsonMock, parseObjectMemberDataPassed)
 {
     Json::Value objectValue;
     objectValue["pie"] = 3;
@@ -107,5 +102,5 @@ TEST(EasyJsonMock, parseObjectMemberDataPassed)
 
     mock.gmock_parseObjectMemberData(member, objectValue);
 
-    EXPECT_TRUE(ease._mainMap.empty());
+    ASSERT_TRUE(ease._mainMap.empty());
 }
