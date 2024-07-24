@@ -13,7 +13,7 @@ find_package(spdlog REQUIRED)
 find_library(JSONCPP_LIBRARIES NAMES jsoncpp)
 find_library(EASYJSON_LIBRARY NAMES easyjson)
 # find_library(EASYJSON_LIB easyjson PATHS /path/to/easyjson)
-target_link_libraries(easyjson_tester PRIVATE ${EASYJSON_LIB})
+target_link_libraries(easyjson PRIVATE ${EASYJSON_LIB})
 
 
 # Add your executable
