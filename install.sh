@@ -23,12 +23,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	mkdir -p "$INSTALL_DIR/lib" "$INSTALL_DIR/include"
 	# Copy the header files
 	cp -R ../include/* "$INSTALL_DIR/include/" 
-else
+else # linux
     INSTALL_DIR="/usr/local/lib/easyjson/$VERSION"
 	# Create the installation directories
 	mkdir -p "$INSTALL_DIR/lib"
 	# Copy the header files
-	cp -R ../include/* "/usr/local/include/" 
+	cp -R ../include/* "/usr/include/" 
     LIB_EXT="so"
 fi
 
