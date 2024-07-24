@@ -12,8 +12,6 @@ find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_library(JSONCPP_LIBRARIES NAMES jsoncpp)
 find_library(EASYJSON_LIBRARY NAMES easyjson)
-# find_library(EASYJSON_LIB easyjson PATHS /path/to/easyjson)
-target_link_libraries(easyjson PRIVATE ${EASYJSON_LIB})
 
 
 # Add your executable
@@ -34,7 +32,7 @@ if(UNIX AND NOT APPLE)
         jsoncpp
         fmt::fmt
         spdlog::spdlog
-        easyjson
+        /usr/local/lib/easyjson/0.0.1/lib/libeasyjson.so
     )
 elseif(APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE
