@@ -15,13 +15,20 @@ fi
 # Create build directory and navigate to it
 mkdir -p ./build && cd ./build 
 
-# Check for OS type and set the correct library extension and installation directory
+# Check for OS and set the correct library extension and installation directory
 if [[ "$OSTYPE" == "darwin"* ]]; then
     LIB_EXT="dylib"
     INSTALL_DIR="/usr/local/Cellar/easyjson/$VERSION"
+	# Create the installation directories
+	mkdir -p "$INSTALL_DIR/lib" "$INSTALL_DIR/include"
+	# Copy the header files
+	cp -R ../include/* "$INSTALL_DIR/include/" 
 else
     INSTALL_DIR="/usr/local/lib/easyjson/$VERSION"
-	# /usr/include
+	# Create the installation directories
+	mkdir -p "$INSTALL_DIR/lib"
+	# Copy the header files
+	cp -R ../include/* "/usr/local/include/" 
     LIB_EXT="so"
 fi
 
@@ -31,17 +38,10 @@ cmake ..
 # Build the project
 cmake --build .
 
-# Create the installation directories
-mkdir -p "$INSTALL_DIR/lib"
-mkdir -p "$INSTALL_DIR/include"
-
 # Copy the library file
 cp "libeasyjson.$LIB_EXT" "$INSTALL_DIR/lib"
-
-# Copy the header files
-cp -R ../include/* "$INSTALL_DIR/include/" 
 
 # Copy config files to tester(s)
 cp -R ../configs/* "$TESTER" 
 
-echo "[100%] Installation completed successfully."
+echo "-- Installation completed successfully."
