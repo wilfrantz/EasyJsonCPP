@@ -20,7 +20,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     LIB_EXT="dylib"
     INSTALL_DIR="/usr/local/Cellar/easyjson/$VERSION"
 else
-    INSTALL_DIR="/usr/local/easyjson/$VERSION"
+    INSTALL_DIR="/usr/local/lib/easyjson/$VERSION"
+	# /usr/include
     LIB_EXT="so"
 fi
 
