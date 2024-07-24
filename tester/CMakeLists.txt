@@ -31,6 +31,7 @@ if(UNIX AND NOT APPLE)
         jsoncpp
         fmt::fmt
         spdlog::spdlog
+        easyjson
     )
 elseif(APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE
