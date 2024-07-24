@@ -1,6 +1,7 @@
 #!/bin/bash
 
 TESTER="../tester/"
+export LIB_EXT="dummy"
 
 # Remove build directory if it exists
 if [ -d ./build/ ]; then
@@ -9,6 +10,15 @@ fi
 
 # Create build directory and navigate to it
 mkdir -p ./build && cd ./build || exit
+
+# Check for OS type and set the correct library extension and installation directory
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    LIB_EXT="dylib"
+    INSTALL_DIR="/usr/local/Cellar/easyjson/0.0.1"
+else
+    LIB_EXT="so"
+    INSTALL_DIR="/usr/local/easyjson/0.0.1"
+fi
 
 # Generate Makefiles using CMake
 cmake ..
