@@ -38,7 +38,7 @@ elseif(APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE
         fmt::fmt
         spdlog::spdlog
-        /usr/local/Cellar/jsoncpp/1.9.5/lib/libjsoncpp.dylib
+        /usr/local/Cellar/jsoncpp/1.9.6/lib/libjsoncpp.dylib
         /usr/local/Cellar/easyjson/0.0.1/lib/libeasyjson.dylib
     )
 endif()

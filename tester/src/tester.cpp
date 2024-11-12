@@ -19,9 +19,7 @@ namespace tester
                 setLogLevel(testerInfoMap["mode"]);
         };
 
-        // Tester method to print the content of the nested map
-        // void Tester::printNestedMap(const std::string &prefix = "")
-        // void Tester::printNestedMap(const std::string &prefix = "")
+        // Tester method to print the content of a map ///NOTE: for testing purposes.
         void Tester::displayMap(const std::map<std::string, std::string> &configMap)
         {
                 if (!configMap.empty())
@@ -38,6 +36,7 @@ namespace tester
                 }
         }
 
+        // Tester method to print the content of the nested map ///NOTE: for testing purposes.
         void Tester::displayMap(const std::map<std::string, std::map<std::string, std::string>> &configMap)
         {
                 if (configMap.empty())
@@ -55,9 +54,7 @@ namespace tester
                 }
         }
 
-        /// @brief  Print a welcome message
-        /// @param  none.
-        /// @return none.
+        // Print a welcome message
         void Tester::displayInfo()
         {
                 _logger->info("Welcome to {}", getFromConfigMap("project", this->_configMap));
@@ -85,4 +82,4 @@ namespace tester
                 }
         }
 
-}
+} // !namespace tester

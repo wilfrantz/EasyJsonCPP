@@ -2,6 +2,7 @@
 
 using namespace easyjson;
 
+// Test cases for the EasyJsonMock class: PASSED
 TEST_F(EasyJsonMock, parseArrayObjectDataPassed)
 {
     std::string jsonString = R"([{
@@ -31,6 +32,7 @@ TEST_F(EasyJsonMock, parseArrayObjectDataPassed)
     ASSERT_NO_THROW(mock.gmock_parseArrayObjectData(objects));
 }
 
+// Test case for the parseArrayObjectData method: FAILED
 TEST_F(EasyJsonMock, parseArrayObjectDataFailed)
 {
     try
@@ -53,6 +55,7 @@ TEST_F(EasyJsonMock, parseArrayObjectDataFailed)
     }
 }
 
+// Test case for the processMemberData method: PASSED
 TEST_F(EasyJsonMock, processMemberDataPassed)
 {
     std::string member = "member1";
@@ -73,6 +76,7 @@ TEST_F(EasyJsonMock, processMemberDataPassed)
     }
 }
 
+// Test case for the parseObjectMemberData method: FAILED
 TEST_F(EasyJsonMock, parseObjectMemberDataFailed)
 {
     try
@@ -91,6 +95,7 @@ TEST_F(EasyJsonMock, parseObjectMemberDataFailed)
     }
 }
 
+// Test case for the parseObjectMemberData method: PASSED
 TEST_F(EasyJsonMock, parseObjectMemberDataPassed)
 {
     Json::Value objectValue;

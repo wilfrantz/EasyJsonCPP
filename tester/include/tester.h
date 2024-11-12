@@ -2,10 +2,9 @@
  * @file tester.hpp
  * @brief Header file for the Tester class.
  *
- * This file contains the definition of the Tester class, which is used for
- *
- * The class provides // TODO
- *
+ * This file contains the definition of the Tester class, which is used to test the EasyJsonCPP library.
+ * It also contains the definitions of the Twitter, Instagram, Tiktok, and Telegram classes, which are used
+ * to test the EasyJsonCPP library.
  *
  * @author: (C) 2023 Wilfrantz Dede
  */
