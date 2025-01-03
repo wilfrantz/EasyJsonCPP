@@ -15,6 +15,32 @@
 #include <easyjson.h>
 
 // Interface for classes that support the key
+
+using namespace easyjson;
+namespace tester
+{
+    class Tester final : public EasyJsonCPP
+    {
+    public:
+        Tester(const std::unordered_map<std::string, std::unordered_map<std::string,
+                                                                        std::string>> &configData);
+
+        inline const std::unordered_map<std::string, std::string> retrieve(std::string key)
+        {
+            return _mainMap.at(key);
+        }
+
+        void displayInfo();
+        static std::shared_ptr<spdlog::logger> _logger;
+        std::unordered_map<std::string, std::string> testerInfoMap;
+
+    private:
+        const std::unordered_map<std::string,
+                                 std::unordered_map<std::string, std::string>>
+            _mainMap;
+        std::unordered_map<std::string, std::string> _configMap; // Add this line
+    };
+}
 namespace twitter
 {
     class Twitter
@@ -50,34 +76,6 @@ namespace telegram
     public:
         Telegram(const std::unordered_map<std::string, std::string> &map) : _configMap(map) {}
         std::unordered_map<std::string, std::string> _configMap;
-    };
-}
-
-using namespace easyjson;
-namespace tester
-{
-    class Tester final : public EasyJsonCPP
-    {
-    public:
-        Tester(const std::unordered_map<std::string, std::unordered_map<std::string,
-                                                              std::string>> &configData);
-
-        void displayInfo();
-        void displayMap(const std::unordered_map<std::string, std::string> &configMap);
-        void displayMap(const std::unordered_map<std::string, std::unordered_map<std::string, std::string>> &configMap);
-
-        inline const std::unordered_map<std::string, std::string> retrieve(std::string key)
-        {
-            return _mainMap.at(key);
-        }
-
-        static std::shared_ptr<spdlog::logger> _logger;
-        std::unordered_map<std::string, std::string> testerInfoMap;
-
-    private:
-        const std::unordered_map<std::string,
-                                 std::unordered_map<std::string, std::string>> _mainMap;
-        std::unordered_map<std::string, std::string> _configMap; // Add this line
     };
 }
 

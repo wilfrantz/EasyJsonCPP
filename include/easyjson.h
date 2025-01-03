@@ -60,6 +60,10 @@ namespace easyjson
 
         ~EasyJsonCPP() = default;
 
+        /// NOTES: For testing purposes.
+        void displayMap(const std::unordered_map<std::string, std::string> &configMap);
+        void displayMap(const std::unordered_map<std::string, std::unordered_map<std::string, std::string>> &configMap);
+
         static std::unordered_map<std::string, std::string> _configMap;
         std::unordered_map<std::string, 
         std::unordered_map<std::string, std::string>> _mainMap;

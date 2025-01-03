@@ -19,41 +19,6 @@ namespace tester
                 setLogLevel(testerInfoMap["mode"]);
         };
 
-        // Tester method to print the content of a map ///NOTE: for testing purposes.
-        void Tester::displayMap(const std::unordered_map<std::string, std::string> &configMap)
-        {
-                if (!configMap.empty())
-                {
-                        for (const auto &element : configMap)
-                        {
-                                _logger->debug(element.first + " : " + element.second);
-                        }
-                }
-                else
-                {
-                        _logger->error("Map is empty.");
-                        exit(EXIT_FAILURE);
-                }
-        }
-
-        // Tester method to print the content of the nested map ///NOTE: for testing purposes.
-        void Tester::displayMap(const std::unordered_map<std::string, std::unordered_map<std::string, std::string>> &configMap)
-        {
-                if (configMap.empty())
-                {
-                        _logger->error("Map is empty.");
-                        throw std::runtime_error("Map is empty");
-                }
-
-                for (const auto &outPair : configMap)
-                {
-                        for (const auto &innerPair : outPair.second)
-                        {
-                                _logger->debug(innerPair.first + " : " + innerPair.second);
-                        }
-                }
-        }
-
         // Print a welcome message
         void Tester::displayInfo()
         {
