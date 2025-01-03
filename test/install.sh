@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script is used to install the unit test for the EasyJsonCPP library.
+
 set -e
 
 # Remove build directory if it exists

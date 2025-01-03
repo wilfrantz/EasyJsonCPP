@@ -2,9 +2,14 @@
   "info": {
     "mode": "debug",
     "project": "EasyJson",
-    "version": "(v0.0.1)",
+    "version": "0.0.2",
     "description": "Simplify JSON configuration file integration",
     "filename": "metadata.json",
     "author": "(C) 2023 Wilfrantz Dede"
+  },
+  "change": {
+    "version": "0.0.2",
+    "date": "2023-01-01",
+    "description": "Change 'std::map' to 'std::unordered_map' for better performance."
   }
 }

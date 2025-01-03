@@ -20,9 +20,9 @@ namespace twitter
     class Twitter
     {
     public:
-        Twitter(const std::map<std::string, std::string> &map) : _configMap(map) {}
+        Twitter(const std::unordered_map<std::string, std::string> &map) : _configMap(map) {}
 
-        std::map<std::string, std::string> _configMap;
+        std::unordered_map<std::string, std::string> _configMap;
     };
 }
 namespace instagram
@@ -30,8 +30,8 @@ namespace instagram
     class Instagram
     {
     public:
-        Instagram(const std::map<std::string, std::string> &map) : _configMap(map) {}
-        std::map<std::string, std::string> _configMap;
+        Instagram(const std::unordered_map<std::string, std::string> &map) : _configMap(map) {}
+        std::unordered_map<std::string, std::string> _configMap;
     };
 }
 namespace tiktok
@@ -39,8 +39,8 @@ namespace tiktok
     class Tiktok
     {
     public:
-        Tiktok(const std::map<std::string, std::string> &map) : _configMap(map) {}
-        std::map<std::string, std::string> _configMap;
+        Tiktok(const std::unordered_map<std::string, std::string> &map) : _configMap(map) {}
+        std::unordered_map<std::string, std::string> _configMap;
     };
 }
 namespace telegram
@@ -48,8 +48,8 @@ namespace telegram
     class Telegram
     {
     public:
-        Telegram(const std::map<std::string, std::string> &map) : _configMap(map) {}
-        std::map<std::string, std::string> _configMap;
+        Telegram(const std::unordered_map<std::string, std::string> &map) : _configMap(map) {}
+        std::unordered_map<std::string, std::string> _configMap;
     };
 }
 
@@ -59,23 +59,25 @@ namespace tester
     class Tester final : public EasyJsonCPP
     {
     public:
-        Tester(const std::map<std::string, std::map<std::string,
-                                                    std::string>> &configData);
+        Tester(const std::unordered_map<std::string, std::unordered_map<std::string,
+                                                              std::string>> &configData);
 
         void displayInfo();
-        void displayMap(const std::map<std::string, std::string> &configMap);
-        void displayMap(const std::map<std::string, std::map<std::string, std::string>> &configMap);
+        void displayMap(const std::unordered_map<std::string, std::string> &configMap);
+        void displayMap(const std::unordered_map<std::string, std::unordered_map<std::string, std::string>> &configMap);
 
-        inline const std::map<std::string, std::string> retrieve(std::string key)
+        inline const std::unordered_map<std::string, std::string> retrieve(std::string key)
         {
             return _mainMap.at(key);
         }
 
         static std::shared_ptr<spdlog::logger> _logger;
-        std::map<std::string, std::string> testerInfoMap;
+        std::unordered_map<std::string, std::string> testerInfoMap;
 
     private:
-        const std::map<std::string, std::map<std::string, std::string>> _mainMap;
+        const std::unordered_map<std::string,
+                                 std::unordered_map<std::string, std::string>> _mainMap;
+        std::unordered_map<std::string, std::string> _configMap; // Add this line
     };
 }
 

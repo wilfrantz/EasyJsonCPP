@@ -1,11 +1,11 @@
-
 #include "tester.h"
 
 namespace tester
 {
         std::shared_ptr<spdlog::logger> Tester::_logger = spdlog::stdout_color_mt("Tester");
 
-        Tester::Tester(const std::map<std::string, std::map<std::string, std::string>> &configData)
+        Tester::Tester(const std::unordered_map<std::string,
+                                                std::unordered_map<std::string, std::string>> &configData)
             : _mainMap(configData)
         {
                 _logger = spdlog::get("Tester");
@@ -20,7 +20,7 @@ namespace tester
         };
 
         // Tester method to print the content of a map ///NOTE: for testing purposes.
-        void Tester::displayMap(const std::map<std::string, std::string> &configMap)
+        void Tester::displayMap(const std::unordered_map<std::string, std::string> &configMap)
         {
                 if (!configMap.empty())
                 {
@@ -37,7 +37,7 @@ namespace tester
         }
 
         // Tester method to print the content of the nested map ///NOTE: for testing purposes.
-        void Tester::displayMap(const std::map<std::string, std::map<std::string, std::string>> &configMap)
+        void Tester::displayMap(const std::unordered_map<std::string, std::unordered_map<std::string, std::string>> &configMap)
         {
                 if (configMap.empty())
                 {

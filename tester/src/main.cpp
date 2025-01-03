@@ -32,7 +32,7 @@ int main()
     EasyJsonCPP loader("easy_config.json");
     Tester test(loader.loadConfiguration());
 
-    /// *************************** RunTime test. *************************
+    // TEST: Display the configuration file information.
     Twitter tweet(test.retrieve("twitter"));
     test.displayMap(tweet._configMap);
 

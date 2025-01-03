@@ -28,6 +28,7 @@
 #ifndef EASYJSONCPP_H
 #define EASYJSONCPP_H
 
+#include <unordered_map>
 #include <header.h>
 
 namespace easyjson
@@ -41,8 +42,10 @@ namespace easyjson
 
         void showLibraryInfo();
         void setLogLevel(const std::string &level);
-        std::map<std::string, std::string> readInfoData();
-        std::map<std::string, std::map<std::string, std::string>> loadConfiguration();
+        std::unordered_map<std::string, std::string> readInfoData();
+        std::unordered_map<std::string,
+                           std::unordered_map<std::string, std::string>>
+        loadConfiguration();
 
         // Methods to parse the Json configuration file.
         void validateRootObject(const Json::Value &root);
@@ -52,13 +55,14 @@ namespace easyjson
         void processMemberData(const std::string &member, const std::string &key, const Json::Value &value);
 
         const std::string &getFromConfigMap(const std::string &key,
-                                            const std::map<std::string,
-                                                           std::string> &configMap = _configMap);
+                                            const std::unordered_map<std::string,
+                                                                     std::string> &configMap = _configMap);
 
         ~EasyJsonCPP() = default;
 
-        static std::map<std::string, std::string> _configMap;
-        std::map<std::string, std::map<std::string, std::string>> _mainMap;
+        static std::unordered_map<std::string, std::string> _configMap;
+        std::unordered_map<std::string, 
+        std::unordered_map<std::string, std::string>> _mainMap;
 
 #ifdef UNIT_TEST
         friend class EasyJsonMock;

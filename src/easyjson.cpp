@@ -2,7 +2,7 @@
 
 namespace easyjson
 {
-    std::map<std::string, std::string> EasyJsonCPP::_configMap;
+    // std::unordered_map<std::string, std::unordered_map<std::string, std::string>> EasyJsonCPP::_mainMap;
     std::shared_ptr<spdlog::logger> EasyJsonCPP::_logger = spdlog::stdout_color_mt("easyJson");
 
     EasyJsonCPP::EasyJsonCPP(const std::string &configFile)
@@ -29,7 +29,8 @@ namespace easyjson
      * @return A map containing the parsed configuration data.
      * @throw std::runtime_error If there's an error processing the configuration file.
      */
-    std::map<std::string, std::map<std::string, std::string>> EasyJsonCPP::loadConfiguration()
+    std::unordered_map<std::string, std::unordered_map<std::string, std::string>>
+    EasyJsonCPP::loadConfiguration()
     {
         // Check if the configuration file path is empty
         if (_configFile.empty())
@@ -231,7 +232,7 @@ namespace easyjson
      * @return A reference to the value associated with the key if found, otherwise a reference to a static error string.
      */
     const std::string &EasyJsonCPP::getFromConfigMap(const std::string &key,
-                                                     const std::map<std::string, std::string> &configMap)
+                                                     const std::unordered_map<std::string, std::string> &configMap)
     {
         static std::string errorString;
 
@@ -301,7 +302,7 @@ namespace easyjson
     void EasyJsonCPP::showLibraryInfo()
     {
 
-        const std::map<std::string, std::string> infoDataMap = readInfoData();
+        const std::unordered_map<std::string, std::string> infoDataMap = readInfoData();
 
         _logger->info("{} {}", getFromConfigMap("project", infoDataMap), getFromConfigMap("version", infoDataMap));
         _logger->info(getFromConfigMap("description", infoDataMap));
@@ -331,14 +332,15 @@ namespace easyjson
      * @return A map containing information data read from the JSON file.
      */
 
-    std::map<std::string, std::string> EasyJsonCPP::readInfoData()
+    std::unordered_map<std::string, std::string> EasyJsonCPP::readInfoData()
     {
-        const std::string &filename = "metadata.json";
+        // const std::string &filename = "metadata.json";
+        const std::string &filename = "/usr/local/Cellar/easyjson/etc/metadata.json";
 
         std::ifstream file(filename);
         Json::Value root;
         Json::Reader reader;
-        std::map<std::string, std::string> dataMap;
+        std::unordered_map<std::string, std::string> dataMap;
 
         // Read the file and parse JSON
         if (reader.parse(file, root))

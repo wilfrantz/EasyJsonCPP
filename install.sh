@@ -5,6 +5,7 @@ set -e
 TESTER="../tester/"
 VERSION="0.0.1"
 LIB_EXT="dummy"
+ETC="/usr/local/Cellar/easyjson/etc"
 INSTALL_DIR="/dev/null"
 
 # Remove build directory if it exists
@@ -52,6 +53,7 @@ cp "libeasyjson.$LIB_EXT" "$INSTALL_DIR/lib"
 
 # Copy config files to tester(s)
 echo "-- Copying config files to tester(s)"
-cp -R ../configs/* "$TESTER" 
+cp -R ../configs/* "$ETC" 
+# cp -R ../configs/* "$TESTER" 
 
 echo "-- Installation completed successfully. --"

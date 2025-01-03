@@ -6,5 +6,10 @@
     "description": "Simplify configuration data integration",
     "filename": "metadata.json",
     "author": "(C) 2023 Wilfrantz Dede"
+  },
+  "change": {
+    "version": "0.0.2",
+    "date": "2025-01-03",
+    "description": "Change 'std::map' to 'std::unordered_map' for better performance."
   }
 }

@@ -6,7 +6,7 @@
       "version": "(v2.0.0)",
       "note": "Sample data for testing.",
       "filename": "config.json",
-      "author": "John Doe",
+      "author": "(C)John Doe",
       "description": "Sample Configuration File.",
       "targets": "telegram, instagram, twitter, tiktok"
     }
