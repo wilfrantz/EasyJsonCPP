@@ -334,13 +334,20 @@ namespace easyjson
 
     std::unordered_map<std::string, std::string> EasyJsonCPP::readInfoData()
     {
-        // const std::string &filename = "metadata.json";
-        const std::string &filename = "/usr/local/Cellar/easyjson/etc/metadata.json";
+        const std::string &filename = "metadata.json";
+        // const std::string &filename = "/usr/local/Cellar/easyjson/etc/metadata.json";
 
         std::ifstream file(filename);
         Json::Value root;
         Json::Reader reader;
         std::unordered_map<std::string, std::string> dataMap;
+
+        // Check if the file is open
+        if (!file.is_open())
+        {
+            _logger->error("Failed to open file: {}", filename);
+            throw std::runtime_error("Failed to open file: " + filename);
+        }
 
         // Read the file and parse JSON
         if (reader.parse(file, root))
@@ -356,7 +363,7 @@ namespace easyjson
         else
         {
             _logger->error("Failed to parse JSON from file: {}", filename);
-            throw std::runtime_error("There was an error with the InfoData file");
+            throw std::runtime_error("Failed to parse JSON from file: " + filename);
         }
 
         return dataMap;

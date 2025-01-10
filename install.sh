@@ -5,7 +5,15 @@ set -e
 TESTER="../tester/"
 VERSION="0.0.1"
 LIB_EXT="dummy"
-ETC="/usr/local/Cellar/easyjson/etc"
+ETC="PlaceHolder"
+if (uname -s | grep -q Darwin); then
+    echo "Running on macOS"
+    ETC="/usr/local/Cellar/easyjson/etc"
+else
+    echo "Running on Linux"
+    ETC="/usr/local/lib/easyjson/etc"
+fi
+
 INSTALL_DIR="/dev/null"
 
 # Remove build directory if it exists
@@ -33,7 +41,8 @@ else # linux
     echo "-- Setting the correct library extension and installation directory for Linux"
     INSTALL_DIR="/usr/local/lib/easyjson/$VERSION"
     # Create the installation directories
-    mkdir -p "$INSTALL_DIR/lib"
+    echo "-- Creating the installation directories"
+    mkdir -p "$INSTALL_DIR/lib" 
     # Copy the header files
     cp -R ../include/* "/usr/include/" 
     LIB_EXT="so"
