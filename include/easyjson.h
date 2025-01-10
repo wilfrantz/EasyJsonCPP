@@ -40,6 +40,8 @@ namespace easyjson
 
         explicit EasyJsonCPP(const std::string &configFile);
 
+        // Initialization code for the EasyJsonCPP class.
+
         void showLibraryInfo();
         void setLogLevel(const std::string &level);
         std::unordered_map<std::string, std::string> readInfoData();
@@ -60,18 +62,20 @@ namespace easyjson
 
         ~EasyJsonCPP() = default;
 
-        /// NOTES: For testing purposes.
+        /// NOTES: For integration testing purposes.
         void displayMap(const std::unordered_map<std::string, std::string> &configMap);
         void displayMap(const std::unordered_map<std::string, std::unordered_map<std::string, std::string>> &configMap);
 
         static std::unordered_map<std::string, std::string> _configMap;
         std::unordered_map<std::string, 
         std::unordered_map<std::string, std::string>> _mainMap;
+        bool isInitialized() const { return initialized; }
 
 #ifdef UNIT_TEST
         friend class EasyJsonMock;
 #endif
     private:
+        bool initialized{true}; 
         std::string _configFile{};
         static std::shared_ptr<spdlog::logger> _logger;
 

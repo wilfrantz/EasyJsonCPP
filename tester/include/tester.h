@@ -36,9 +36,11 @@ namespace tester
 
     private:
         const std::unordered_map<std::string,
-                                 std::unordered_map<std::string, std::string>>
+                                 std::unordered_map<std::string,
+                                                    std::string>>
             _mainMap;
-        std::unordered_map<std::string, std::string> _configMap; // Add this line
+
+        std::unordered_map<std::string, std::string> _configMap; 
     };
 }
 namespace twitter

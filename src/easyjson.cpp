@@ -290,7 +290,7 @@ namespace easyjson
         }
 
         spdlog::set_level(log_level);
-        _logger->info("Log level set to: {} \n", level);
+        _logger->debug("Log level set to: {} \n", level);
     }
 
     /** @brief:
@@ -304,9 +304,9 @@ namespace easyjson
 
         const std::unordered_map<std::string, std::string> infoDataMap = readInfoData();
 
-        _logger->info("{} {}", getFromConfigMap("project", infoDataMap), getFromConfigMap("version", infoDataMap));
-        _logger->info(getFromConfigMap("description", infoDataMap));
-        _logger->info("Author: {}", getFromConfigMap("author", infoDataMap));
+        _logger->debug("{} {}", getFromConfigMap("project", infoDataMap), getFromConfigMap("version", infoDataMap));
+        _logger->debug(getFromConfigMap("description", infoDataMap));
+        _logger->debug("Author: {}", getFromConfigMap("author", infoDataMap));
         setLogLevel(getFromConfigMap("mode", infoDataMap));
 
 // Get the jsoncpp version, if available
